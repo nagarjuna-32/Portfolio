@@ -149,13 +149,13 @@ function initCustomCursor() {
   runCursorTick();
 }
 
+// LERP outer ring lag tracker
 function runCursorTick() {
   if (cursorDot) {
     cursorDot.style.left = `${mouseXRaw}px`;
     cursorDot.style.top = `${mouseYRaw}px`;
   }
 
-  // Smooth LERP lag tracking outer ring
   if (cursorRing) {
     ringX += (mouseXRaw - ringX) * 0.14;
     ringY += (mouseYRaw - ringY) * 0.14;
@@ -200,7 +200,7 @@ function initBackground3D() {
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   const particlesMaterial = new THREE.PointsMaterial({
     size: 0.06,
-    color: 0xd4af37, // Soft Gold Nodes
+    color: 0x00f2fe, // Neon Cyan Nodes
     transparent: true,
     opacity: 0.75,
     blending: THREE.AdditiveBlending
@@ -220,14 +220,14 @@ function initBackground3D() {
   const lineMaterial = new THREE.LineBasicMaterial({
     vertexColors: true,
     transparent: true,
-    opacity: 0.2,
+    opacity: 0.22,
     blending: THREE.AdditiveBlending
   });
 
   const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
   scene.add(lineSegments);
 
-  // --- Floating Luxury Geometries ---
+  // --- Floating Geometries ---
   const shapesGroup = new THREE.Group();
   scene.add(shapesGroup);
 
@@ -238,32 +238,34 @@ function initBackground3D() {
     new THREE.TorusGeometry(0.3, 0.08, 10, 36)
   ];
 
-  const goldMaterial = new THREE.MeshPhongMaterial({
-    color: 0xd4af37,
-    emissive: 0xd4af37,
-    emissiveIntensity: 0.1,
-    specular: 0xffebad,
+  const cyanMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00f2fe,
+    emissive: 0x00f2fe,
+    emissiveIntensity: 0.12,
+    specular: 0xffffff,
     shininess: 90,
     transparent: true,
     opacity: 0.65
   });
 
-  const graphiteMaterial = new THREE.MeshPhongMaterial({
-    color: 0x222225,
-    emissive: 0x08080a,
-    specular: 0x777777,
-    shininess: 50,
+  const purpleMaterial = new THREE.MeshPhongMaterial({
+    color: 0xd946ef,
+    emissive: 0xd946ef,
+    emissiveIntensity: 0.1,
+    specular: 0xffffff,
+    shininess: 80,
     transparent: true,
-    opacity: 0.75
+    opacity: 0.65
   });
 
-  const glassMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
+  const greenMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00ff88,
+    emissive: 0x00ff88,
+    emissiveIntensity: 0.08,
     specular: 0xffffff,
-    shininess: 120,
+    shininess: 100,
     transparent: true,
-    opacity: 0.35,
-    side: THREE.DoubleSide
+    opacity: 0.55
   });
 
   for (let i = 0; i < 10; i++) {
@@ -271,11 +273,11 @@ function initBackground3D() {
     let mat;
     const r = Math.random();
     if (r < 0.4) {
-      mat = goldMaterial;
+      mat = cyanMaterial;
     } else if (r < 0.7) {
-      mat = graphiteMaterial;
+      mat = purpleMaterial;
     } else {
-      mat = glassMaterial;
+      mat = greenMaterial;
     }
 
     const mesh = new THREE.Mesh(geom, mat);
@@ -305,11 +307,11 @@ function initBackground3D() {
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
   scene.add(ambientLight);
 
-  const dirLight1 = new THREE.DirectionalLight(0xd4af37, 1.2); // Warm Gold Light
+  const dirLight1 = new THREE.DirectionalLight(0x00f2fe, 1.2); // Cyan directional light
   dirLight1.position.set(5, 5, 5);
   scene.add(dirLight1);
 
-  const dirLight2 = new THREE.DirectionalLight(0xcd7f32, 0.8); // Warm Bronze Light
+  const dirLight2 = new THREE.DirectionalLight(0xd946ef, 0.8); // Purple directional light
   dirLight2.position.set(-5, -5, 2);
   scene.add(dirLight2);
 
@@ -343,8 +345,8 @@ function initBackground3D() {
     let lineIdx = 0;
     const lineCoords = lineGeometry.attributes.position.array;
     const lineCol = lineGeometry.attributes.color.array;
-    const colorGold = new THREE.Color(0xd4af37);
-    const colorBronze = new THREE.Color(0xcd7f32);
+    const colorCyan = new THREE.Color(0x00f2fe);
+    const colorPurple = new THREE.Color(0xd946ef);
 
     for (let i = 0; i < particlesCount; i++) {
       const xi = coords[i * 3];
@@ -372,7 +374,7 @@ function initBackground3D() {
           lineCoords[lineIdx * 6 + 4] = yj;
           lineCoords[lineIdx * 6 + 5] = zj;
 
-          const mixed = colorGold.clone().lerp(colorBronze, dist / 2.2);
+          const mixed = colorCyan.clone().lerp(colorPurple, dist / 2.2);
 
           lineCol[lineIdx * 6] = mixed.r * alpha;
           lineCol[lineIdx * 6 + 1] = mixed.g * alpha;
@@ -421,7 +423,7 @@ function initBackground3D() {
   animate();
 }
 
-// ================= 2. Hero Scene (WebGL 3D Laptop & Orbit Rings in Gold/Bronze) =================
+// ================= 2. Hero Scene (WebGL 3D Laptop & Orbit Rings in Cyan/Purple) =================
 function initHero3D() {
   const canvas = document.getElementById('hero-3d-canvas');
   if (!canvas) return;
@@ -439,16 +441,16 @@ function initHero3D() {
 
   // Keyboard Base Plate
   const baseGeo = new THREE.BoxGeometry(2.4, 0.1, 1.7);
-  const baseMat = new THREE.MeshPhongMaterial({ color: 0x0f0f10, shininess: 80, specular: 0xd4af37 });
+  const baseMat = new THREE.MeshPhongMaterial({ color: 0x080c1c, shininess: 80, specular: 0x00f2fe });
   const baseMesh = new THREE.Mesh(baseGeo, baseMat);
   baseMesh.position.y = -0.5;
   laptopGroup.add(baseMesh);
 
-  // Keypad Glow Pane (Emissive Gold)
+  // Keypad Glow Pane (Emissive Neon Cyan)
   const keypadGeo = new THREE.BoxGeometry(2.1, 0.02, 1.1);
   const keypadMat = new THREE.MeshPhongMaterial({ 
-    color: 0xd4af37, 
-    emissive: 0xd4af37, 
+    color: 0x00f2fe, 
+    emissive: 0x00f2fe, 
     emissiveIntensity: 1.0, 
     transparent: true, 
     opacity: 0.75 
@@ -462,16 +464,16 @@ function initHero3D() {
   screenGroup.position.set(0, -0.45, -0.8);
 
   const panelGeo = new THREE.BoxGeometry(2.4, 1.6, 0.08);
-  const panelMat = new THREE.MeshPhongMaterial({ color: 0x1a1a1d, shininess: 80, specular: 0xd4af37 });
+  const panelMat = new THREE.MeshPhongMaterial({ color: 0x04060e, shininess: 80, specular: 0xd946ef });
   const panelMesh = new THREE.Mesh(panelGeo, panelMat);
   panelMesh.position.y = 0.8;
   screenGroup.add(panelMesh);
 
-  // Display Panel (Frosted Bronze)
+  // Display Panel (Frosted Purple)
   const displayGeo = new THREE.PlaneGeometry(2.26, 1.46);
   const displayMat = new THREE.MeshPhongMaterial({ 
-    color: 0xcd7f32, 
-    emissive: 0xcd7f32, 
+    color: 0xd946ef, 
+    emissive: 0xd946ef, 
     emissiveIntensity: 0.6, 
     transparent: true, 
     opacity: 0.4 
@@ -480,8 +482,8 @@ function initHero3D() {
   displayMesh.position.set(0, 0.8, 0.045);
   screenGroup.add(displayMesh);
 
-  // Grid lines inside display (Gold)
-  const screenGrid = new THREE.GridHelper(1.4, 14, 0xd4af37, 0xd4af37);
+  // Grid lines inside display (Cyan)
+  const screenGrid = new THREE.GridHelper(1.4, 14, 0x00f2fe, 0x00f2fe);
   screenGrid.rotation.x = Math.PI / 2;
   screenGrid.position.set(0, 0.8, 0.05);
   screenGroup.add(screenGrid);
@@ -491,17 +493,17 @@ function initHero3D() {
   laptopGroup.add(screenGroup);
   scene.add(laptopGroup);
 
-  // Orbit Rings (Gold and Bronze)
+  // Orbit Rings (Cyan and Purple)
   const ringGroup = new THREE.Group();
   
   const ring1Geo = new THREE.TorusGeometry(2.0, 0.03, 8, 64);
-  const ring1Mat = new THREE.MeshBasicMaterial({ color: 0xd4af37, transparent: true, opacity: 0.55 });
+  const ring1Mat = new THREE.MeshBasicMaterial({ color: 0x00f2fe, transparent: true, opacity: 0.55 });
   ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
   ring1.rotation.x = Math.PI / 2.3;
   ringGroup.add(ring1);
 
   const ring2Geo = new THREE.TorusGeometry(2.3, 0.03, 8, 64);
-  const ring2Mat = new THREE.MeshBasicMaterial({ color: 0xcd7f32, transparent: true, opacity: 0.45 });
+  const ring2Mat = new THREE.MeshBasicMaterial({ color: 0xd946ef, transparent: true, opacity: 0.45 });
   ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
   ring2.rotation.x = -Math.PI / 2.5;
   ring2.rotation.y = Math.PI / 6;
@@ -514,7 +516,7 @@ function initHero3D() {
   dirLight.position.set(2, 4, 3);
   scene.add(dirLight);
 
-  const pointLight = new THREE.PointLight(0xd4af37, 2.0, 8); // Gold Point Light
+  const pointLight = new THREE.PointLight(0x00f2fe, 2.0, 8); // Cyan Point Light
   pointLight.position.set(0, 1.5, 0.5);
   scene.add(pointLight);
 
@@ -559,7 +561,7 @@ function initHero3D() {
   animate();
 }
 
-// ================= 3. Skills Scene (Magnetic Floating Skill Cubes in Gold/Bronze) =================
+// ================= 3. Skills Scene (Magnetic Floating Skill Cubes in Cyan/Purple) =================
 function initSkills3D() {
   const canvas = document.getElementById('skills-3d-canvas');
   if (!canvas) return;
@@ -579,7 +581,7 @@ function initSkills3D() {
     textCanvas.height = 256;
     const ctx = textCanvas.getContext('2d');
     
-    ctx.fillStyle = '#1a1a1d'; // graphite base
+    ctx.fillStyle = '#080c1c'; // navy base
     ctx.fillRect(0, 0, 256, 256);
     
     ctx.lineWidth = 14;
@@ -604,12 +606,12 @@ function initSkills3D() {
     return new THREE.CanvasTexture(textCanvas);
   }
 
-  // Soft gold and bronze colored skill list
+  // Cyan and purple tech colors
   skillDataRef = [
-    { name: 'Python', color: '#d4af37', pos: [-1.4, 0.9, 0], scale: 0.9 },
-    { name: 'React', color: '#cd7f32', pos: [1.3, 0.8, -0.5], scale: 0.95 },
-    { name: 'Flask', color: '#d4af37', pos: [-1.2, -0.9, -0.3], scale: 0.85 },
-    { name: 'MongoDB', color: '#cd7f32', pos: [1.2, -0.9, 0.2], scale: 0.9 }
+    { name: 'Python', color: '#00f2fe', pos: [-1.4, 0.9, 0], scale: 0.9 },
+    { name: 'React', color: '#d946ef', pos: [1.3, 0.8, -0.5], scale: 0.95 },
+    { name: 'Flask', color: '#00ff88', pos: [-1.2, -0.9, -0.3], scale: 0.85 },
+    { name: 'MongoDB', color: '#ff007f', pos: [1.2, -0.9, 0.2], scale: 0.9 }
   ];
 
   skillCubes = [];
@@ -822,10 +824,10 @@ function initNavbarMenu() {
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) {
-      header.style.background = 'rgba(15, 15, 16, 0.95)';
-      header.style.borderBottom = '1px solid rgba(212, 175, 55, 0.15)';
+      header.style.background = 'rgba(2, 2, 5, 0.95)';
+      header.style.borderBottom = '1px solid rgba(0, 242, 254, 0.15)';
     } else {
-      header.style.background = 'rgba(15, 15, 16, 0.85)';
+      header.style.background = 'rgba(2, 2, 5, 0.85)';
       header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.03)';
     }
   });
