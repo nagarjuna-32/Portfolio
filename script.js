@@ -124,7 +124,7 @@ function initCustomCursor() {
   ringY = window.innerHeight / 2;
 
   // Listeners for hovered active scale transformations
-  const hoverables = document.querySelectorAll('a, button, select, textarea, input, [role="button"], [data-tilt], .card, .gallery-card, .timeline-content, .achievement-card');
+  const hoverables = document.querySelectorAll('a, button, select, textarea, input, [role="button"], [data-tilt], .card, .gallery-card, .timeline-content, .achievement-card, .stat-card');
   hoverables.forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursorDot.classList.add('hovered');

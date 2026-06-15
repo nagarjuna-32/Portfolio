@@ -182,31 +182,104 @@
     <h2 class="section-title">Projects</h2>
     <p class="section-subtitle">Projects that show my learning, creativity, and product-building mindset.</p>
 
-    <!-- Featured Project Highlight -->
+    <!-- Project Statistics -->
+    <div class="project-stats reveal-on-scroll">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-folder-open"></i></div>
+        <span class="stat-number">10+</span>
+        <span class="stat-label">Projects Built</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-brain"></i></div>
+        <span class="stat-number">5+</span>
+        <span class="stat-label">AI Applications</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-rocket"></i></div>
+        <span class="stat-number">3</span>
+        <span class="stat-label">Deployed SaaS Products</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+        <span class="stat-number">2</span>
+        <span class="stat-label">Hackathon Projects</span>
+      </div>
+    </div>
+
+    <!-- Category: Featured Projects -->
+    <h3 class="category-title"><i class="fas fa-star animate-pulse"></i> Featured Projects</h3>
+
+    <!-- Featured Project 1: AI Placement Platform -->
     <div class="featured-project-container reveal-on-scroll">
       <div class="card featured-card" data-tilt data-tilt-max="8" data-tilt-glare data-tilt-max-glare="0.25">
         <div class="card-inner-3d">
           <div class="featured-badge"><i class="fas fa-star animate-pulse"></i> Featured Project</div>
-          <h3>AI Attendance System</h3>
-          <p class="featured-desc">A smart attendance management system using face recognition. It allows student registration, faculty login, automatic attendance marking, subject-wise attendance, and admin/faculty dashboard. Designed to improve accuracy and eliminate manual effort.</p>
+          <h3>AI Placement Platform</h3>
+          <p class="featured-desc">A production-ready multi-agent AI SaaS platform that helps students prepare for placements through AI-powered resume analysis, adaptive mock interviews, coding assessments, company eligibility checking, group discussions, and personalized career roadmaps.</p>
           
           <div class="featured-grid">
             <div>
               <h4 class="details-title"><i class="fas fa-list-check"></i> Key Features</h4>
               <ul class="project-features">
-                <li>Face recognition-based attendance marker</li>
-                <li>Dual registration portals (Student & Faculty)</li>
-                <li>Subject-wise analytics & records</li>
-                <li>Mobile-friendly face scanner UI</li>
+                <li>AI Resume parsing, ATS scoring, and feedback generation</li>
+                <li>Adaptive simulated mock interviews with real-time feedback</li>
+                <li>Interactive coding playground and assessments</li>
+                <li>Multi-agent group discussion and personalized roadmaps</li>
               </ul>
             </div>
             <div>
               <h4 class="details-title"><i class="fas fa-layer-group"></i> Architecture Stack</h4>
               <div class="project-tags">
-                <span>Frontend: React / HTML / CSS / JS</span>
-                <span>Backend: Python / Flask</span>
-                <span>Database: MongoDB</span>
-                <span>Deployment: Vercel</span>
+                <span>React</span>
+                <span>TypeScript</span>
+                <span>FastAPI</span>
+                <span>PostgreSQL</span>
+                <span>Redis</span>
+                <span>Celery</span>
+                <span>JWT</span>
+                <span>AI Agents</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-links">
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-demo">
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Project 2: AI Attendance System -->
+    <div class="featured-project-container reveal-on-scroll">
+      <div class="card featured-card" data-tilt data-tilt-max="8" data-tilt-glare data-tilt-max-glare="0.25">
+        <div class="card-inner-3d">
+          <div class="featured-badge"><i class="fas fa-star animate-pulse"></i> Featured Project</div>
+          <h3>AI Attendance System</h3>
+          <p class="featured-desc">Smart attendance management system using face recognition with Principal, HOD, Faculty, and Student dashboards. Supports real-time attendance scanning, timetable-based attendance, analytics, reports, and shortage alerts.</p>
+          
+          <div class="featured-grid">
+            <div>
+              <h4 class="details-title"><i class="fas fa-list-check"></i> Key Features</h4>
+              <ul class="project-features">
+                <li>Real-time facial recognition attendance logging</li>
+                <li>Principal, HOD, Faculty, and Student dashboards</li>
+                <li>Timetable-integrated session matching & analytics</li>
+                <li>Real-time attendance shortage alerts & reports</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="details-title"><i class="fas fa-layer-group"></i> Architecture Stack</h4>
+              <div class="project-tags">
+                <span>Frontend: React / Vite</span>
+                <span>Backend: FastAPI</span>
+                <span>Database: PostgreSQL</span>
+                <span>Deployment: Vercel + Render</span>
+                <span>AI: OpenCV Face Recognition</span>
               </div>
             </div>
           </div>
@@ -223,14 +296,59 @@
       </div>
     </div>
 
-    <!-- General Projects Grid -->
+    <!-- Featured Project 3: ASYNCPROOF -->
+    <div class="featured-project-container reveal-on-scroll">
+      <div class="card featured-card" data-tilt data-tilt-max="8" data-tilt-glare data-tilt-max-glare="0.25">
+        <div class="card-inner-3d">
+          <div class="featured-badge"><i class="fas fa-star animate-pulse"></i> Featured Project</div>
+          <h3>ASYNCPROOF – AI Meeting Intelligence Platform</h3>
+          <p class="featured-desc">AI-powered meeting assistant that records meetings, generates transcripts, creates summaries, extracts action items, and provides intelligent meeting insights.</p>
+          
+          <div class="featured-grid">
+            <div>
+              <h4 class="details-title"><i class="fas fa-list-check"></i> Key Features</h4>
+              <ul class="project-features">
+                <li>Automated meeting recording via Playwright bot</li>
+                <li>Whisper-based audio transcription & summarization</li>
+                <li>Structured action item extraction & analytics</li>
+                <li>Semantic search across meeting history & transcripts</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="details-title"><i class="fas fa-layer-group"></i> Architecture Stack</h4>
+              <div class="project-tags">
+                <span>React</span>
+                <span>FastAPI</span>
+                <span>PostgreSQL</span>
+                <span>Playwright</span>
+                <span>AI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-links">
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-demo">
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Major Projects -->
+    <h3 class="category-title"><i class="fas fa-rocket"></i> Major Projects</h3>
+
     <div class="cards reveal-on-scroll">
+      <!-- Network Intrusion Detection System -->
       <div class="card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
         <div class="card-inner-3d">
-          <h3>Jarvis AI Assistant</h3>
-          <p>Desktop AI assistant that can understand voice commands, open apps, search the web, and automate tasks.</p>
+          <h3>Network Intrusion Detection System</h3>
+          <p>Machine learning-based cybersecurity platform that monitors network traffic and detects attacks such as DoS/DDoS, brute-force attempts, malware activity, and abnormal behavior.</p>
           <div class="project-tags">
-            <span>Python</span><span>AI</span><span>Voice</span><span>Automation</span>
+            <span>Python</span><span>Scikit-learn</span><span>Pandas</span><span>Machine Learning</span>
           </div>
           <div class="card-links">
             <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
@@ -240,27 +358,13 @@
         </div>
       </div>
 
-      <div class="card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
-        <div class="card-inner-3d">
-          <h3>ASYNCPROOF</h3>
-          <p>AI Meeting Intelligence Platform for meeting recording, summaries, transcripts, translations, and action items.</p>
-          <div class="project-tags">
-            <span>Full Stack</span><span>AI Summary</span><span>Meetings</span><span>SaaS</span>
-          </div>
-          <div class="card-links">
-            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
-              <i class="fab fa-github"></i> GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-
+      <!-- Smart Train Coach Locator -->
       <div class="card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
         <div class="card-inner-3d">
           <h3>Smart Train Coach Locator</h3>
-          <p>Hackathon project that helps passengers locate their train coach position before the train arrives.</p>
+          <p>Hackathon project that helps passengers identify the exact coach position on the platform before the train arrives.</p>
           <div class="project-tags">
-            <span>Hackathon</span><span>Railway</span><span>Web App</span><span>UX</span>
+            <span>React</span><span>FastAPI</span><span>Railway Data</span>
           </div>
           <div class="card-links">
             <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
@@ -270,12 +374,50 @@
         </div>
       </div>
 
+      <!-- FuturePath AI -->
       <div class="card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
+        <div class="card-inner-3d">
+          <h3>FuturePath AI</h3>
+          <p>AI-powered career guidance platform that provides students with personalized career roadmaps, skill recommendations, and future planning guidance.</p>
+          <div class="project-tags">
+            <span>React</span><span>AI</span><span>Recommendation System</span>
+          </div>
+          <div class="card-links">
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jarvis AI Assistant -->
+      <div class="card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
+        <div class="card-inner-3d">
+          <h3>Jarvis AI Assistant</h3>
+          <p>Desktop voice assistant capable of understanding voice commands, opening applications, searching the web, and automating tasks.</p>
+          <div class="project-tags">
+            <span>Python</span><span>Speech Recognition</span><span>Automation</span>
+          </div>
+          <div class="card-links">
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Mini Projects & Experiments -->
+    <h3 class="category-title"><i class="fas fa-tools"></i> Mini Projects & Experiments</h3>
+
+    <div class="mini-cards reveal-on-scroll">
+      <!-- Password Strength Checker -->
+      <div class="card mini-card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
         <div class="card-inner-3d">
           <h3>Password Strength Checker</h3>
           <p>Cybersecurity mini project that checks password strength and gives security improvement suggestions.</p>
           <div class="project-tags">
-            <span>Cybersecurity</span><span>JavaScript</span><span>Security</span><span>Tool</span>
+            <span>Cybersecurity</span><span>JavaScript</span><span>Security</span>
           </div>
           <div class="card-links">
             <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
@@ -285,7 +427,8 @@
         </div>
       </div>
 
-      <div class="card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
+      <!-- Fake News Detection -->
+      <div class="card mini-card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
         <div class="card-inner-3d">
           <h3>Fake News Detection</h3>
           <p>Machine learning project that analyzes news text and predicts whether the news is likely real or fake.</p>
@@ -300,12 +443,13 @@
         </div>
       </div>
 
-      <div class="card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
+      <!-- Digital Product Store -->
+      <div class="card mini-card" data-tilt data-tilt-max="15" data-tilt-glare data-tilt-max-glare="0.15">
         <div class="card-inner-3d">
           <h3>Digital Product Store</h3>
           <p>Web platform idea for selling digital products with browsing, payments, and automated file delivery.</p>
           <div class="project-tags">
-            <span>E-Commerce</span><span>Backend</span><span>Payments</span><span>Digital</span>
+            <span>E-Commerce</span><span>Backend</span><span>Payments</span>
           </div>
           <div class="card-links">
             <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
