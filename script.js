@@ -1035,27 +1035,15 @@ function initAbout3D() {
   });
 
   // Speech Logic and Animation state variables
-  const speakBtn = document.getElementById('avatar-speak-btn');
   let isSpeaking = false;
+  let hasSpoken = false;
   let synth = window.speechSynthesis;
   let utterance = null;
 
-  if (speakBtn) {
-    speakBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (isSpeaking) {
-        synth.cancel();
-        stopSpeakingState();
-      } else {
-        startSpeakingState();
-      }
-    });
-  }
-
   function startSpeakingState() {
+    if (hasSpoken) return;
     isSpeaking = true;
-    speakBtn.classList.add('speaking');
-    speakBtn.innerHTML = '<i class="fas fa-stop"></i> Stop Speaking';
+    hasSpoken = true;
     
     const textToSpeak = "Hi, I am Nagarjuna N. I am currently pursuing my Bachelor of Engineering in Artificial Intelligence and Data Science at SIET College, Tumkur. I am extremely passionate about building modern AI products, full stack web applications, cybersecurity projects, and futuristic user experiences. I enjoy working on innovative ideas like AI assistants, meeting intelligence platforms, automation systems, and ethical hacking tools.";
     
@@ -1078,9 +1066,50 @@ function initAbout3D() {
 
   function stopSpeakingState() {
     isSpeaking = false;
-    speakBtn.classList.remove('speaking');
-    speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> Listen to Naga Arjun';
   }
+
+  // Trigger automatically on scroll using ScrollTrigger
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+      trigger: '#about',
+      start: 'top 65%',
+      end: 'bottom 20%',
+      onEnter: () => {
+        startSpeakingState();
+      },
+      onLeave: () => {
+        if (isSpeaking) {
+          synth.cancel();
+          stopSpeakingState();
+        }
+      },
+      onEnterBack: () => {
+        startSpeakingState();
+      },
+      onLeaveBack: () => {
+        if (isSpeaking) {
+          synth.cancel();
+          stopSpeakingState();
+        }
+      }
+    });
+  }
+
+  // Handle Autoplay blocks by triggering on first interaction if in view
+  const userInteractionEvents = ['click', 'touchstart', 'keydown'];
+  const unlockSpeech = () => {
+    const aboutSec = document.getElementById('about');
+    if (aboutSec && !hasSpoken) {
+      const rect = aboutSec.getBoundingClientRect();
+      const inViewport = (rect.top < window.innerHeight * 0.75) && (rect.bottom > window.innerHeight * 0.20);
+      if (inViewport) {
+        startSpeakingState();
+      }
+    }
+    // Remove listeners once run
+    userInteractionEvents.forEach(evt => document.removeEventListener(evt, unlockSpeech));
+  };
+  userInteractionEvents.forEach(evt => document.addEventListener(evt, unlockSpeech, { passive: true }));
 
   // Animation Loop
   let targetRotX = 0, targetRotY = 0;
