@@ -31,6 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initNavbarMenu();
   initVanillaTilt();
+  initCertificateLightbox();
 });
 
 // Track Mouse Movement Coordinates
@@ -604,12 +605,12 @@ function initSkills3D() {
     return new THREE.CanvasTexture(textCanvas);
   }
 
-  // Soft gold and bronze colored skill list
+  // Soft violet and cyan colored skill list
   skillDataRef = [
-    { name: 'Python', color: '#d4af37', pos: [-1.4, 0.9, 0], scale: 0.9 },
-    { name: 'React', color: '#cd7f32', pos: [1.3, 0.8, -0.5], scale: 0.95 },
-    { name: 'Flask', color: '#d4af37', pos: [-1.2, -0.9, -0.3], scale: 0.85 },
-    { name: 'MongoDB', color: '#cd7f32', pos: [1.2, -0.9, 0.2], scale: 0.9 }
+    { name: 'Python', color: '#9061f9', pos: [-1.4, 0.9, 0], scale: 0.9 },
+    { name: 'React', color: '#06b6d4', pos: [1.3, 0.8, -0.5], scale: 0.95 },
+    { name: 'Flask', color: '#9061f9', pos: [-1.2, -0.9, -0.3], scale: 0.85 },
+    { name: 'MongoDB', color: '#06b6d4', pos: [1.2, -0.9, 0.2], scale: 0.9 }
   ];
 
   skillCubes = [];
@@ -886,5 +887,50 @@ function initInteractiveParallax() {
       duration: 1.8,
       ease: 'power1.out'
     });
+  });
+}
+
+// ================= Certificate Lightbox Modal =================
+function initCertificateLightbox() {
+  const lightbox = document.getElementById('certificate-lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const closeBtn = document.querySelector('.lightbox-close');
+  
+  if (!lightbox || !lightboxImg || !lightboxCaption || !closeBtn) return;
+  
+  const certImages = document.querySelectorAll('.gallery-card img');
+  certImages.forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const src = img.getAttribute('src');
+      const alt = img.getAttribute('alt');
+      const cardTitle = img.parentElement.querySelector('h3') ? img.parentElement.querySelector('h3').innerText : alt;
+      
+      lightboxImg.setAttribute('src', src);
+      lightboxCaption.innerText = cardTitle;
+      
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  
+  const closeLightbox = () => {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  };
+  
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target !== lightboxImg && e.target !== lightboxCaption) {
+      closeLightbox();
+    }
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
   });
 }
