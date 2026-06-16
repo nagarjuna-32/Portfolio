@@ -32,6 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initNavbarMenu();
   initVanillaTilt();
   initCertificateLightbox();
+  initAbout3D();
 });
 
 // Track Mouse Movement Coordinates
@@ -945,4 +946,176 @@ function initCertificateLightbox() {
       closeLightbox();
     }
   });
+}
+
+// ================= About Me 3D Talking Hologram Card =================
+function initAbout3D() {
+  const canvas = document.getElementById('about-3d-canvas');
+  if (!canvas) return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+  camera.position.z = 5.2;
+
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Load User Image as 3D Texture
+  const textureLoader = new THREE.TextureLoader();
+  const photoTexture = textureLoader.load('arjun_new.jpeg');
+
+  // Create Hologram Plane
+  const geometry = new THREE.PlaneGeometry(2.1, 2.8);
+  const material = new THREE.MeshPhongMaterial({
+    map: photoTexture,
+    transparent: true,
+    opacity: 0.9,
+    shininess: 60,
+    side: THREE.DoubleSide
+  });
+  const photoMesh = new THREE.Mesh(geometry, material);
+  photoMesh.position.y = 0.1;
+  scene.add(photoMesh);
+
+  // Glowing Hologram Border Frame
+  const borderGeo = new THREE.PlaneGeometry(2.2, 2.9);
+  const borderMat = new THREE.MeshBasicMaterial({
+    color: 0x9061f9,
+    transparent: true,
+    opacity: 0.3,
+    side: THREE.DoubleSide
+  });
+  const borderMesh = new THREE.Mesh(borderGeo, borderMat);
+  borderMesh.position.set(0, 0.1, -0.01);
+  scene.add(borderMesh);
+
+  // Holographic Scanlines / Grid lines overlaying the photo
+  const gridHelper = new THREE.GridHelper(2.5, 25, 0x06b6d4, 0x06b6d4);
+  gridHelper.rotation.x = Math.PI / 2;
+  gridHelper.position.set(0, 0.1, 0.02);
+  gridHelper.material.transparent = true;
+  gridHelper.material.opacity = 0.12;
+  scene.add(gridHelper);
+
+  // Concentric Sound Wave Orbits (Cyan & Violet)
+  const waveGroup = new THREE.Group();
+  const waveGeo = new THREE.RingGeometry(1.5, 1.52, 64);
+  const waveMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.4, side: THREE.DoubleSide });
+  const waveRing = new THREE.Mesh(waveGeo, waveMat);
+  waveGroup.add(waveRing);
+  
+  const waveGeo2 = new THREE.RingGeometry(1.7, 1.72, 64);
+  const waveMat2 = new THREE.MeshBasicMaterial({ color: 0x9061f9, transparent: true, opacity: 0.3, side: THREE.DoubleSide });
+  const waveRing2 = new THREE.Mesh(waveGeo2, waveMat2);
+  waveGroup.add(waveRing2);
+  
+  waveGroup.position.set(0, 0.1, 0.05);
+  scene.add(waveGroup);
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+  scene.add(ambientLight);
+
+  const pointLight = new THREE.PointLight(0x06b6d4, 1.5, 10);
+  pointLight.position.set(1.5, 1.5, 2);
+  scene.add(pointLight);
+
+  const pointLight2 = new THREE.PointLight(0x9061f9, 1.5, 10);
+  pointLight2.position.set(-1.5, -1.5, 2);
+  scene.add(pointLight2);
+
+  // Resize handler
+  window.addEventListener('resize', () => {
+    const w = canvas.parentElement.clientWidth;
+    const h = canvas.parentElement.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  // Speech Logic and Animation state variables
+  const speakBtn = document.getElementById('avatar-speak-btn');
+  let isSpeaking = false;
+  let synth = window.speechSynthesis;
+  let utterance = null;
+
+  if (speakBtn) {
+    speakBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isSpeaking) {
+        synth.cancel();
+        stopSpeakingState();
+      } else {
+        startSpeakingState();
+      }
+    });
+  }
+
+  function startSpeakingState() {
+    isSpeaking = true;
+    speakBtn.classList.add('speaking');
+    speakBtn.innerHTML = '<i class="fas fa-stop"></i> Stop Speaking';
+    
+    const textToSpeak = "Hi, I am Nagarjuna N. I am currently pursuing my Bachelor of Engineering in Artificial Intelligence and Data Science at SIET College, Tumkur. I am extremely passionate about building modern AI products, full stack web applications, cybersecurity projects, and futuristic user experiences. I enjoy working on innovative ideas like AI assistants, meeting intelligence platforms, automation systems, and ethical hacking tools.";
+    
+    utterance = new SpeechSynthesisUtterance(textToSpeak);
+    
+    const voices = synth.getVoices();
+    const premiumVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Microsoft David') || v.lang.startsWith('en'));
+    if (premiumVoice) utterance.voice = premiumVoice;
+    
+    utterance.onend = () => {
+      stopSpeakingState();
+    };
+    
+    utterance.onerror = () => {
+      stopSpeakingState();
+    };
+    
+    synth.speak(utterance);
+  }
+
+  function stopSpeakingState() {
+    isSpeaking = false;
+    speakBtn.classList.remove('speaking');
+    speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> Listen to Naga Arjun';
+  }
+
+  // Animation Loop
+  let targetRotX = 0, targetRotY = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate sound wave rings
+    waveRing.rotation.z += 0.005;
+    waveRing2.rotation.z -= 0.003;
+
+    // Pulse rings and grid if speaking
+    if (isSpeaking) {
+      const pulse = 1.0 + Math.sin(Date.now() * 0.015) * 0.08;
+      waveRing.scale.set(pulse, pulse, 1);
+      waveRing2.scale.set(1 / pulse, 1 / pulse, 1);
+      gridHelper.material.opacity = 0.25 + Math.sin(Date.now() * 0.01) * 0.1;
+      photoMesh.position.z = Math.sin(Date.now() * 0.02) * 0.04;
+    } else {
+      waveRing.scale.set(1, 1, 1);
+      waveRing2.scale.set(1, 1, 1);
+      gridHelper.material.opacity = 0.12;
+      photoMesh.position.z = 0;
+    }
+
+    // Parallax mouse follow
+    targetRotX += (mouseY - targetRotX) * 0.08;
+    targetRotY += (mouseX - targetRotY) * 0.08;
+
+    photoMesh.rotation.y = targetRotY * 0.4;
+    photoMesh.rotation.x = -targetRotX * 0.3;
+    borderMesh.rotation.y = targetRotY * 0.4;
+    borderMesh.rotation.x = -targetRotX * 0.3;
+
+    renderer.render(scene, camera);
+  }
+  
+  animate();
 }
