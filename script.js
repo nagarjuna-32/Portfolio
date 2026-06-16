@@ -201,7 +201,7 @@ function initBackground3D() {
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   const particlesMaterial = new THREE.PointsMaterial({
     size: 0.06,
-    color: 0xd4af37, // Soft Gold Nodes
+    color: 0x9061f9, // Soft Violet Nodes
     transparent: true,
     opacity: 0.75,
     blending: THREE.AdditiveBlending
@@ -228,22 +228,32 @@ function initBackground3D() {
   const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
   scene.add(lineSegments);
 
-  // --- Floating Luxury Geometries ---
+  // --- Floating Cyber, Fullstack, and AI Geometries ---
   const shapesGroup = new THREE.Group();
   scene.add(shapesGroup);
 
   const bgShapes = [];
   const shapeGeoms = [
-    new THREE.BoxGeometry(0.5, 0.5, 0.5),
-    new THREE.SphereGeometry(0.35, 24, 24),
-    new THREE.TorusGeometry(0.3, 0.08, 10, 36)
+    new THREE.IcosahedronGeometry(0.35, 1), // AI (neural node)
+    new THREE.TorusKnotGeometry(0.24, 0.07, 48, 8, 2, 3), // Cyber (encryption knot)
+    new THREE.CylinderGeometry(0.28, 0.28, 0.45, 16, 3) // Fullstack (database server drum)
   ];
 
-  const goldMaterial = new THREE.MeshPhongMaterial({
-    color: 0xd4af37,
-    emissive: 0xd4af37,
+  const violetMaterial = new THREE.MeshPhongMaterial({
+    color: 0x9061f9,
+    emissive: 0x9061f9,
     emissiveIntensity: 0.1,
-    specular: 0xffebad,
+    specular: 0xd3b3ff,
+    shininess: 90,
+    transparent: true,
+    opacity: 0.65
+  });
+
+  const cyanMaterial = new THREE.MeshPhongMaterial({
+    color: 0x06b6d4,
+    emissive: 0x06b6d4,
+    emissiveIntensity: 0.1,
+    specular: 0x9bf8ff,
     shininess: 90,
     transparent: true,
     opacity: 0.65
@@ -271,9 +281,11 @@ function initBackground3D() {
     const geom = shapeGeoms[Math.floor(Math.random() * shapeGeoms.length)].clone();
     let mat;
     const r = Math.random();
-    if (r < 0.4) {
-      mat = goldMaterial;
+    if (r < 0.35) {
+      mat = violetMaterial;
     } else if (r < 0.7) {
+      mat = cyanMaterial;
+    } else if (r < 0.85) {
       mat = graphiteMaterial;
     } else {
       mat = glassMaterial;
@@ -306,11 +318,11 @@ function initBackground3D() {
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
   scene.add(ambientLight);
 
-  const dirLight1 = new THREE.DirectionalLight(0xd4af37, 1.2); // Warm Gold Light
+  const dirLight1 = new THREE.DirectionalLight(0x9061f9, 1.2); // Warm Violet Light
   dirLight1.position.set(5, 5, 5);
   scene.add(dirLight1);
 
-  const dirLight2 = new THREE.DirectionalLight(0xcd7f32, 0.8); // Warm Bronze Light
+  const dirLight2 = new THREE.DirectionalLight(0x06b6d4, 0.8); // Warm Cyan Light
   dirLight2.position.set(-5, -5, 2);
   scene.add(dirLight2);
 
@@ -344,8 +356,8 @@ function initBackground3D() {
     let lineIdx = 0;
     const lineCoords = lineGeometry.attributes.position.array;
     const lineCol = lineGeometry.attributes.color.array;
-    const colorGold = new THREE.Color(0xd4af37);
-    const colorBronze = new THREE.Color(0xcd7f32);
+    const colorViolet = new THREE.Color(0x9061f9);
+    const colorCyan = new THREE.Color(0x06b6d4);
 
     for (let i = 0; i < particlesCount; i++) {
       const xi = coords[i * 3];
@@ -373,7 +385,7 @@ function initBackground3D() {
           lineCoords[lineIdx * 6 + 4] = yj;
           lineCoords[lineIdx * 6 + 5] = zj;
 
-          const mixed = colorGold.clone().lerp(colorBronze, dist / 2.2);
+          const mixed = colorViolet.clone().lerp(colorCyan, dist / 2.2);
 
           lineCol[lineIdx * 6] = mixed.r * alpha;
           lineCol[lineIdx * 6 + 1] = mixed.g * alpha;
@@ -440,16 +452,16 @@ function initHero3D() {
 
   // Keyboard Base Plate
   const baseGeo = new THREE.BoxGeometry(2.4, 0.1, 1.7);
-  const baseMat = new THREE.MeshPhongMaterial({ color: 0x0f0f10, shininess: 80, specular: 0xd4af37 });
+  const baseMat = new THREE.MeshPhongMaterial({ color: 0x0f0f10, shininess: 80, specular: 0x9061f9 });
   const baseMesh = new THREE.Mesh(baseGeo, baseMat);
   baseMesh.position.y = -0.5;
   laptopGroup.add(baseMesh);
 
-  // Keypad Glow Pane (Emissive Gold)
+  // Keypad Glow Pane (Emissive Violet)
   const keypadGeo = new THREE.BoxGeometry(2.1, 0.02, 1.1);
   const keypadMat = new THREE.MeshPhongMaterial({ 
-    color: 0xd4af37, 
-    emissive: 0xd4af37, 
+    color: 0x9061f9, 
+    emissive: 0x9061f9, 
     emissiveIntensity: 1.0, 
     transparent: true, 
     opacity: 0.75 
@@ -463,16 +475,16 @@ function initHero3D() {
   screenGroup.position.set(0, -0.45, -0.8);
 
   const panelGeo = new THREE.BoxGeometry(2.4, 1.6, 0.08);
-  const panelMat = new THREE.MeshPhongMaterial({ color: 0x1a1a1d, shininess: 80, specular: 0xd4af37 });
+  const panelMat = new THREE.MeshPhongMaterial({ color: 0x1a1a1d, shininess: 80, specular: 0x9061f9 });
   const panelMesh = new THREE.Mesh(panelGeo, panelMat);
   panelMesh.position.y = 0.8;
   screenGroup.add(panelMesh);
 
-  // Display Panel (Frosted Bronze)
+  // Display Panel (Frosted Cyan)
   const displayGeo = new THREE.PlaneGeometry(2.26, 1.46);
   const displayMat = new THREE.MeshPhongMaterial({ 
-    color: 0xcd7f32, 
-    emissive: 0xcd7f32, 
+    color: 0x06b6d4, 
+    emissive: 0x06b6d4, 
     emissiveIntensity: 0.6, 
     transparent: true, 
     opacity: 0.4 
@@ -481,8 +493,8 @@ function initHero3D() {
   displayMesh.position.set(0, 0.8, 0.045);
   screenGroup.add(displayMesh);
 
-  // Grid lines inside display (Gold)
-  const screenGrid = new THREE.GridHelper(1.4, 14, 0xd4af37, 0xd4af37);
+  // Grid lines inside display (Violet)
+  const screenGrid = new THREE.GridHelper(1.4, 14, 0x9061f9, 0x9061f9);
   screenGrid.rotation.x = Math.PI / 2;
   screenGrid.position.set(0, 0.8, 0.05);
   screenGroup.add(screenGrid);
@@ -492,17 +504,17 @@ function initHero3D() {
   laptopGroup.add(screenGroup);
   scene.add(laptopGroup);
 
-  // Orbit Rings (Gold and Bronze)
+  // Orbit Rings (Violet and Cyan)
   const ringGroup = new THREE.Group();
   
   const ring1Geo = new THREE.TorusGeometry(2.0, 0.03, 8, 64);
-  const ring1Mat = new THREE.MeshBasicMaterial({ color: 0xd4af37, transparent: true, opacity: 0.55 });
+  const ring1Mat = new THREE.MeshBasicMaterial({ color: 0x9061f9, transparent: true, opacity: 0.55 });
   ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
   ring1.rotation.x = Math.PI / 2.3;
   ringGroup.add(ring1);
 
   const ring2Geo = new THREE.TorusGeometry(2.3, 0.03, 8, 64);
-  const ring2Mat = new THREE.MeshBasicMaterial({ color: 0xcd7f32, transparent: true, opacity: 0.45 });
+  const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.45 });
   ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
   ring2.rotation.x = -Math.PI / 2.5;
   ring2.rotation.y = Math.PI / 6;
@@ -515,7 +527,7 @@ function initHero3D() {
   dirLight.position.set(2, 4, 3);
   scene.add(dirLight);
 
-  const pointLight = new THREE.PointLight(0xd4af37, 2.0, 8); // Gold Point Light
+  const pointLight = new THREE.PointLight(0x9061f9, 2.0, 8); // Violet Point Light
   pointLight.position.set(0, 1.5, 0.5);
   scene.add(pointLight);
 
