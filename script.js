@@ -436,6 +436,7 @@ function initBackground3D() {
 }
 
 // ================= 2. Hero Scene (WebGL 3D Laptop & Orbit Rings in Gold/Bronze) =================
+// ================= 2. Hero Scene (WebGL 3D AI, Dev & Cyber Terminal) =================
 function initHero3D() {
   const canvas = document.getElementById('hero-3d-canvas');
   if (!canvas) return;
@@ -451,7 +452,7 @@ function initHero3D() {
   // Base laptop group
   laptopGroup = new THREE.Group();
 
-  // Keyboard Base Plate
+  // Keyboard Base Plate (Development)
   const baseGeo = new THREE.BoxGeometry(2.4, 0.1, 1.7);
   const baseMat = new THREE.MeshPhongMaterial({ color: 0x0f0f10, shininess: 80, specular: 0x9061f9 });
   const baseMesh = new THREE.Mesh(baseGeo, baseMat);
@@ -471,7 +472,7 @@ function initHero3D() {
   keypadMesh.position.set(0, -0.44, 0.1);
   laptopGroup.add(keypadMesh);
 
-  // Screen Panel Group
+  // Screen Panel Group (Development)
   screenGroup = new THREE.Group();
   screenGroup.position.set(0, -0.45, -0.8);
 
@@ -503,6 +504,76 @@ function initHero3D() {
   // Default tilt open
   screenGroup.rotation.x = -0.25; 
   laptopGroup.add(screenGroup);
+
+  // --- Theme additions (AI, Cyber, Dev) ---
+  
+  // 1. AI Neural Core (hovering above the keyboard)
+  const coreGeo = new THREE.IcosahedronGeometry(0.32, 1);
+  const coreMat = new THREE.MeshPhongMaterial({
+    color: 0x06b6d4,
+    emissive: 0x06b6d4,
+    emissiveIntensity: 0.8,
+    transparent: true,
+    opacity: 0.9,
+    shininess: 100
+  });
+  const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+  coreMesh.position.set(0, 0.1, -0.1);
+  laptopGroup.add(coreMesh);
+
+  // 2. Cyber security Concentric Firewall Shield
+  const shieldGeo = new THREE.SphereGeometry(0.5, 12, 12);
+  const shieldMat = new THREE.MeshBasicMaterial({
+    color: 0x9061f9,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.35
+  });
+  const shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
+  shieldMesh.position.copy(coreMesh.position);
+  laptopGroup.add(shieldMesh);
+
+  // 3. Cyber security Cryptographic Torus Knot
+  const cyberKnotGeo = new THREE.TorusKnotGeometry(0.72, 0.016, 64, 8, 2, 3);
+  const cyberKnotMat = new THREE.MeshBasicMaterial({ 
+    color: 0x06b6d4, 
+    transparent: true, 
+    opacity: 0.4 
+  });
+  const cyberKnot = new THREE.Mesh(cyberKnotGeo, cyberKnotMat);
+  cyberKnot.position.copy(coreMesh.position);
+  laptopGroup.add(cyberKnot);
+
+  // 4. Dev Data streams / Binary particles rising from keyboard into the core
+  const dataCount = 30;
+  const dataGeometry = new THREE.BufferGeometry();
+  const dataPositions = new Float32Array(dataCount * 3);
+  const dataVelocities = [];
+  
+  for (let i = 0; i < dataCount; i++) {
+    // Start at random positions on the keypad base
+    dataPositions[i * 3] = (Math.random() - 0.5) * 1.8;
+    dataPositions[i * 3 + 1] = -0.44;
+    dataPositions[i * 3 + 2] = (Math.random() - 0.5) * 1.0;
+    
+    dataVelocities.push({
+      x: (Math.random() - 0.5) * 0.005,
+      y: 0.015 + Math.random() * 0.02,
+      z: -0.01 - Math.random() * 0.015
+    });
+  }
+  
+  dataGeometry.setAttribute('position', new THREE.BufferAttribute(dataPositions, 3));
+  const dataMaterial = new THREE.PointsMaterial({
+    size: 0.045,
+    color: 0x06b6d4,
+    transparent: true,
+    opacity: 0.85
+  });
+  
+  const dataParticles = new THREE.Points(dataGeometry, dataMaterial);
+  laptopGroup.add(dataParticles);
+
   scene.add(laptopGroup);
 
   // Orbit Rings (Violet and Cyan)
@@ -552,6 +623,33 @@ function initHero3D() {
     ring1.rotation.z += 0.009;
     ring2.rotation.z -= 0.007;
     
+    // Core and shield rotations (AI & Cyber)
+    coreMesh.rotation.y += 0.015;
+    coreMesh.rotation.x += 0.008;
+    shieldMesh.rotation.y -= 0.01;
+    cyberKnot.rotation.z += 0.006;
+    
+    // Core pulsing height
+    coreMesh.position.y = 0.1 + (Math.sin(Date.now() * 0.0018) * 0.06);
+    shieldMesh.position.y = coreMesh.position.y;
+    cyberKnot.position.y = coreMesh.position.y;
+
+    // Update data particles (Development streams)
+    const dataCoords = dataParticles.geometry.attributes.position.array;
+    for (let i = 0; i < dataCount; i++) {
+      dataCoords[i * 3] += dataVelocities[i].x;
+      dataCoords[i * 3 + 1] += dataVelocities[i].y;
+      dataCoords[i * 3 + 2] += dataVelocities[i].z;
+      
+      // Reset particle if it drifts high or far
+      if (dataCoords[i * 3 + 1] > 0.45 || dataCoords[i * 3 + 2] < -0.9) {
+        dataCoords[i * 3] = (Math.random() - 0.5) * 1.8;
+        dataCoords[i * 3 + 1] = -0.44;
+        dataCoords[i * 3 + 2] = (Math.random() - 0.5) * 1.0;
+      }
+    }
+    dataParticles.geometry.attributes.position.needsUpdate = true;
+
     // Screen display hinge pulsing
     screenGroup.rotation.x = -0.3 + (Math.sin(Date.now() * 0.001) * 0.045);
 
