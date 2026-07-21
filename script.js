@@ -33,6 +33,10 @@ window.addEventListener('DOMContentLoaded', () => {
   initVanillaTilt();
   initCertificateLightbox();
   initAbout3D();
+  
+  // Cinematic Tech Innovator features
+  initHeroTabs();
+  initCyberTerminal();
 });
 
 // Track Mouse Movement Coordinates
@@ -202,7 +206,7 @@ function initBackground3D() {
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   const particlesMaterial = new THREE.PointsMaterial({
     size: 0.06,
-    color: 0x9061f9, // Soft Violet Nodes
+    color: 0x00d2ff, // Electric Blue Nodes
     transparent: true,
     opacity: 0.75,
     blending: THREE.AdditiveBlending
@@ -240,19 +244,9 @@ function initBackground3D() {
     new THREE.CylinderGeometry(0.28, 0.28, 0.45, 16, 3) // Fullstack (database server drum)
   ];
 
-  const violetMaterial = new THREE.MeshPhongMaterial({
-    color: 0x9061f9,
-    emissive: 0x9061f9,
-    emissiveIntensity: 0.1,
-    specular: 0xd3b3ff,
-    shininess: 90,
-    transparent: true,
-    opacity: 0.65
-  });
-
-  const cyanMaterial = new THREE.MeshPhongMaterial({
-    color: 0x06b6d4,
-    emissive: 0x06b6d4,
+  const blueMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00d2ff,
+    emissive: 0x00d2ff,
     emissiveIntensity: 0.1,
     specular: 0x9bf8ff,
     shininess: 90,
@@ -260,10 +254,20 @@ function initBackground3D() {
     opacity: 0.65
   });
 
+  const tealMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00f5d4,
+    emissive: 0x00f5d4,
+    emissiveIntensity: 0.1,
+    specular: 0xbbffff,
+    shininess: 90,
+    transparent: true,
+    opacity: 0.65
+  });
+
   const graphiteMaterial = new THREE.MeshPhongMaterial({
-    color: 0x222225,
-    emissive: 0x08080a,
-    specular: 0x777777,
+    color: 0x0c0d15,
+    emissive: 0x020204,
+    specular: 0x666666,
     shininess: 50,
     transparent: true,
     opacity: 0.75
@@ -283,9 +287,9 @@ function initBackground3D() {
     let mat;
     const r = Math.random();
     if (r < 0.35) {
-      mat = violetMaterial;
+      mat = blueMaterial;
     } else if (r < 0.7) {
-      mat = cyanMaterial;
+      mat = tealMaterial;
     } else if (r < 0.85) {
       mat = graphiteMaterial;
     } else {
@@ -319,11 +323,11 @@ function initBackground3D() {
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
   scene.add(ambientLight);
 
-  const dirLight1 = new THREE.DirectionalLight(0x9061f9, 1.2); // Warm Violet Light
+  const dirLight1 = new THREE.DirectionalLight(0x00d2ff, 1.2); // Electric Blue Light
   dirLight1.position.set(5, 5, 5);
   scene.add(dirLight1);
 
-  const dirLight2 = new THREE.DirectionalLight(0x06b6d4, 0.8); // Warm Cyan Light
+  const dirLight2 = new THREE.DirectionalLight(0x00f5d4, 0.8); // Cybernetic Teal Light
   dirLight2.position.set(-5, -5, 2);
   scene.add(dirLight2);
 
@@ -357,8 +361,8 @@ function initBackground3D() {
     let lineIdx = 0;
     const lineCoords = lineGeometry.attributes.position.array;
     const lineCol = lineGeometry.attributes.color.array;
-    const colorViolet = new THREE.Color(0x9061f9);
-    const colorCyan = new THREE.Color(0x06b6d4);
+    const colorBlue = new THREE.Color(0x00d2ff);
+    const colorTeal = new THREE.Color(0x00f5d4);
 
     for (let i = 0; i < particlesCount; i++) {
       const xi = coords[i * 3];
@@ -386,7 +390,7 @@ function initBackground3D() {
           lineCoords[lineIdx * 6 + 4] = yj;
           lineCoords[lineIdx * 6 + 5] = zj;
 
-          const mixed = colorViolet.clone().lerp(colorCyan, dist / 2.2);
+          const mixed = colorBlue.clone().lerp(colorTeal, dist / 2.2);
 
           lineCol[lineIdx * 6] = mixed.r * alpha;
           lineCol[lineIdx * 6 + 1] = mixed.g * alpha;
@@ -443,164 +447,150 @@ function initHero3D() {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-  camera.position.set(0, 0.8, 6.2);
+  camera.position.set(0, 1.0, 5.8);
 
   const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
   renderer.setSize(canvas.clientWidth, canvas.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // Base laptop group
-  laptopGroup = new THREE.Group();
+  // Holographic Core Group
+  const coreGroup = new THREE.Group();
+  scene.add(coreGroup);
 
-  // Keyboard Base Plate (Development)
-  const baseGeo = new THREE.BoxGeometry(2.4, 0.1, 1.7);
-  const baseMat = new THREE.MeshPhongMaterial({ color: 0x0f0f10, shininess: 80, specular: 0x9061f9 });
+  // Obsidian Octagonal Mainframe Base
+  const baseGeo = new THREE.CylinderGeometry(1.3, 1.5, 0.15, 8);
+  const baseMat = new THREE.MeshPhongMaterial({ 
+    color: 0x0c0d15, 
+    shininess: 90, 
+    specular: 0x00d2ff,
+    flatShading: true
+  });
   const baseMesh = new THREE.Mesh(baseGeo, baseMat);
-  baseMesh.position.y = -0.5;
-  laptopGroup.add(baseMesh);
+  baseMesh.position.y = -1.0;
+  coreGroup.add(baseMesh);
 
-  // Keypad Glow Pane (Emissive Violet)
-  const keypadGeo = new THREE.BoxGeometry(2.1, 0.02, 1.1);
-  const keypadMat = new THREE.MeshPhongMaterial({ 
-    color: 0x9061f9, 
-    emissive: 0x9061f9, 
-    emissiveIntensity: 1.0, 
-    transparent: true, 
-    opacity: 0.75 
-  });
-  const keypadMesh = new THREE.Mesh(keypadGeo, keypadMat);
-  keypadMesh.position.set(0, -0.44, 0.1);
-  laptopGroup.add(keypadMesh);
+  // Tech Grid Base plate
+  const gridBase = new THREE.GridHelper(2.5, 12, 0x00d2ff, 0x004455);
+  gridBase.position.y = -0.92;
+  coreGroup.add(gridBase);
 
-  // Screen Panel Group (Development)
-  screenGroup = new THREE.Group();
-  screenGroup.position.set(0, -0.45, -0.8);
-
-  const panelGeo = new THREE.BoxGeometry(2.4, 1.6, 0.08);
-  const panelMat = new THREE.MeshPhongMaterial({ color: 0x1a1a1d, shininess: 80, specular: 0x9061f9 });
-  const panelMesh = new THREE.Mesh(panelGeo, panelMat);
-  panelMesh.position.y = 0.8;
-  screenGroup.add(panelMesh);
-
-  // Display Panel (Frosted Cyan)
-  const displayGeo = new THREE.PlaneGeometry(2.26, 1.46);
-  const displayMat = new THREE.MeshPhongMaterial({ 
-    color: 0x06b6d4, 
-    emissive: 0x06b6d4, 
-    emissiveIntensity: 0.6, 
-    transparent: true, 
-    opacity: 0.4 
-  });
-  const displayMesh = new THREE.Mesh(displayGeo, displayMat);
-  displayMesh.position.set(0, 0.8, 0.045);
-  screenGroup.add(displayMesh);
-
-  // Grid lines inside display (Violet)
-  const screenGrid = new THREE.GridHelper(1.4, 14, 0x9061f9, 0x9061f9);
-  screenGrid.rotation.x = Math.PI / 2;
-  screenGrid.position.set(0, 0.8, 0.05);
-  screenGroup.add(screenGrid);
-
-  // Default tilt open
-  screenGroup.rotation.x = -0.25; 
-  laptopGroup.add(screenGroup);
-
-  // --- Theme additions (AI, Cyber, Dev) ---
-  
-  // 1. AI Neural Core (hovering above the keyboard)
-  const coreGeo = new THREE.IcosahedronGeometry(0.32, 1);
-  const coreMat = new THREE.MeshPhongMaterial({
-    color: 0x06b6d4,
-    emissive: 0x06b6d4,
-    emissiveIntensity: 0.8,
-    transparent: true,
-    opacity: 0.9,
-    shininess: 100
-  });
-  const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-  coreMesh.position.set(0, 0.1, -0.1);
-  laptopGroup.add(coreMesh);
-
-  // 2. Cyber security Concentric Firewall Shield
-  const shieldGeo = new THREE.SphereGeometry(0.5, 12, 12);
-  const shieldMat = new THREE.MeshBasicMaterial({
-    color: 0x9061f9,
+  // Central Holographic AI Node Sphere
+  const sphereGeo = new THREE.IcosahedronGeometry(0.55, 2);
+  const sphereMat = new THREE.MeshPhongMaterial({
+    color: 0x00f5d4, // Cybernetic Teal
+    emissive: 0x00443d,
+    emissiveIntensity: 0.6,
     wireframe: true,
     transparent: true,
-    opacity: 0.35
+    opacity: 0.8
   });
-  const shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
-  shieldMesh.position.copy(coreMesh.position);
-  laptopGroup.add(shieldMesh);
+  const aiSphere = new THREE.Mesh(sphereGeo, sphereMat);
+  aiSphere.position.y = 0.1;
+  coreGroup.add(aiSphere);
 
-  // 3. Cyber security Cryptographic Torus Knot
-  const cyberKnotGeo = new THREE.TorusKnotGeometry(0.72, 0.016, 64, 8, 2, 3);
-  const cyberKnotMat = new THREE.MeshBasicMaterial({ 
-    color: 0x06b6d4, 
-    transparent: true, 
-    opacity: 0.4 
-  });
-  const cyberKnot = new THREE.Mesh(cyberKnotGeo, cyberKnotMat);
-  cyberKnot.position.copy(coreMesh.position);
-  laptopGroup.add(cyberKnot);
-
-  // 4. Dev Data streams / Binary particles rising from keyboard into the core
-  const dataCount = 30;
-  const dataGeometry = new THREE.BufferGeometry();
-  const dataPositions = new Float32Array(dataCount * 3);
-  const dataVelocities = [];
-  
-  for (let i = 0; i < dataCount; i++) {
-    // Start at random positions on the keypad base
-    dataPositions[i * 3] = (Math.random() - 0.5) * 1.8;
-    dataPositions[i * 3 + 1] = -0.44;
-    dataPositions[i * 3 + 2] = (Math.random() - 0.5) * 1.0;
-    
-    dataVelocities.push({
-      x: (Math.random() - 0.5) * 0.005,
-      y: 0.015 + Math.random() * 0.02,
-      z: -0.01 - Math.random() * 0.015
-    });
-  }
-  
-  dataGeometry.setAttribute('position', new THREE.BufferAttribute(dataPositions, 3));
-  const dataMaterial = new THREE.PointsMaterial({
-    size: 0.045,
-    color: 0x06b6d4,
+  // Inner Electric Glow Core
+  const innerGeo = new THREE.SphereGeometry(0.3, 16, 16);
+  const innerMat = new THREE.MeshPhongMaterial({
+    color: 0x00d2ff, // Electric Blue Core
+    emissive: 0x002c33,
+    emissiveIntensity: 1.0,
     transparent: true,
-    opacity: 0.85
+    opacity: 0.95
   });
-  
-  const dataParticles = new THREE.Points(dataGeometry, dataMaterial);
-  laptopGroup.add(dataParticles);
+  const innerCore = new THREE.Mesh(innerGeo, innerMat);
+  innerCore.position.y = 0.1;
+  coreGroup.add(innerCore);
 
-  scene.add(laptopGroup);
-
-  // Orbit Rings (Violet and Cyan)
+  // Concentric Orbiting Rings
   const ringGroup = new THREE.Group();
-  
-  const ring1Geo = new THREE.TorusGeometry(2.0, 0.03, 8, 64);
-  const ring1Mat = new THREE.MeshBasicMaterial({ color: 0x9061f9, transparent: true, opacity: 0.55 });
-  ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-  ring1.rotation.x = Math.PI / 2.3;
-  ringGroup.add(ring1);
+  ringGroup.position.y = 0.1;
+  coreGroup.add(ringGroup);
 
-  const ring2Geo = new THREE.TorusGeometry(2.3, 0.03, 8, 64);
-  const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.45 });
-  ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-  ring2.rotation.x = -Math.PI / 2.5;
-  ring2.rotation.y = Math.PI / 6;
-  ringGroup.add(ring2);
+  // Ring 1: Teal Horizontal Orbit
+  const r1Geo = new THREE.TorusGeometry(1.1, 0.02, 8, 48);
+  const r1Mat = new THREE.MeshBasicMaterial({ color: 0x00f5d4, transparent: true, opacity: 0.65 });
+  const r1 = new THREE.Mesh(r1Geo, r1Mat);
+  r1.rotation.x = Math.PI / 2;
+  ringGroup.add(r1);
 
-  scene.add(ringGroup);
+  // Ring 2: Blue Skewed Orbit
+  const r2Geo = new THREE.TorusGeometry(1.3, 0.02, 8, 48);
+  const r2Mat = new THREE.MeshBasicMaterial({ color: 0x00d2ff, transparent: true, opacity: 0.55 });
+  const r2 = new THREE.Mesh(r2Geo, r2Mat);
+  r2.rotation.x = Math.PI / 4;
+  r2.rotation.y = Math.PI / 6;
+  ringGroup.add(r2);
 
-  // Lighting
-  const dirLight = new THREE.DirectionalLight(0xffffff, 1.6);
-  dirLight.position.set(2, 4, 3);
-  scene.add(dirLight);
+  // Ring 3: Orthogonal Outer Orbit
+  const r3Geo = new THREE.TorusGeometry(1.5, 0.015, 8, 48);
+  const r3Mat = new THREE.MeshBasicMaterial({ color: 0x00f5d4, transparent: true, opacity: 0.45 });
+  const r3 = new THREE.Mesh(r3Geo, r3Mat);
+  r3.rotation.y = Math.PI / 3;
+  r3.rotation.z = Math.PI / 4;
+  ringGroup.add(r3);
 
-  const pointLight = new THREE.PointLight(0x9061f9, 2.0, 8); // Violet Point Light
-  pointLight.position.set(0, 1.5, 0.5);
+  // Floating Cyber Nodes (Shield fragments)
+  const shieldGeo = new THREE.BoxGeometry(0.12, 0.12, 0.03);
+  const shieldMat = new THREE.MeshPhongMaterial({
+    color: 0x00d2ff,
+    emissive: 0x002c33,
+    specular: 0xffffff,
+    transparent: true,
+    opacity: 0.75
+  });
+  const shields = [];
+  const shieldCount = 6;
+
+  for (let i = 0; i < shieldCount; i++) {
+    const angle = (i / shieldCount) * Math.PI * 2;
+    const mesh = new THREE.Mesh(shieldGeo, shieldMat);
+    mesh.userData = {
+      angle: angle,
+      speed: 0.007,
+      radius: 1.0,
+      yOffset: (Math.random() - 0.5) * 0.35
+    };
+    ringGroup.add(mesh);
+    shields.push(mesh);
+  }
+
+  // Upward binary streams / data flows
+  const streamCount = 30;
+  const streamGeometry = new THREE.BufferGeometry();
+  const streamPositions = new Float32Array(streamCount * 3);
+  const streamVelocities = [];
+
+  for (let i = 0; i < streamCount; i++) {
+    streamPositions[i * 3] = (Math.random() - 0.5) * 2.0;
+    streamPositions[i * 3 + 1] = -0.92;
+    streamPositions[i * 3 + 2] = (Math.random() - 0.5) * 2.0;
+    streamVelocities.push(0.01 + Math.random() * 0.015);
+  }
+
+  streamGeometry.setAttribute('position', new THREE.BufferAttribute(streamPositions, 3));
+  const streamMaterial = new THREE.PointsMaterial({
+    size: 0.045,
+    color: 0x00f5d4,
+    transparent: true,
+    opacity: 0.8
+  });
+  const dataStreams = new THREE.Points(streamGeometry, streamMaterial);
+  coreGroup.add(dataStreams);
+
+  // Scene Lighting
+  const ambient = new THREE.AmbientLight(0xffffff, 0.3);
+  scene.add(ambient);
+
+  const keyLight = new THREE.DirectionalLight(0x00d2ff, 1.4);
+  keyLight.position.set(3, 4, 3);
+  scene.add(keyLight);
+
+  const fillLight = new THREE.DirectionalLight(0x00f5d4, 0.9);
+  fillLight.position.set(-3, 2, 2);
+  scene.add(fillLight);
+
+  const pointLight = new THREE.PointLight(0x00f5d4, 2.0, 6);
+  pointLight.position.set(0, 0.1, 0);
   scene.add(pointLight);
 
   // Resize handler
@@ -612,59 +602,59 @@ function initHero3D() {
     renderer.setSize(w, h);
   });
 
-  // Loop
+  // Render Loop
   let targetRotX = 0, targetRotY = 0;
   let targetPosX = 0, targetPosY = 0;
-  
+
   function animate() {
     requestAnimationFrame(animate);
 
-    // Orbits speed
-    ring1.rotation.z += 0.009;
-    ring2.rotation.z -= 0.007;
-    
-    // Core and shield rotations (AI & Cyber)
-    coreMesh.rotation.y += 0.015;
-    coreMesh.rotation.x += 0.008;
-    shieldMesh.rotation.y -= 0.01;
-    cyberKnot.rotation.z += 0.006;
-    
-    // Core pulsing height
-    coreMesh.position.y = 0.1 + (Math.sin(Date.now() * 0.0018) * 0.06);
-    shieldMesh.position.y = coreMesh.position.y;
-    cyberKnot.position.y = coreMesh.position.y;
+    // Slowly rotate spheres
+    aiSphere.rotation.y += 0.008;
+    aiSphere.rotation.x += 0.004;
+    innerCore.rotation.y -= 0.01;
 
-    // Update data particles (Development streams)
-    const dataCoords = dataParticles.geometry.attributes.position.array;
-    for (let i = 0; i < dataCount; i++) {
-      dataCoords[i * 3] += dataVelocities[i].x;
-      dataCoords[i * 3 + 1] += dataVelocities[i].y;
-      dataCoords[i * 3 + 2] += dataVelocities[i].z;
-      
-      // Reset particle if it drifts high or far
-      if (dataCoords[i * 3 + 1] > 0.45 || dataCoords[i * 3 + 2] < -0.9) {
-        dataCoords[i * 3] = (Math.random() - 0.5) * 1.8;
-        dataCoords[i * 3 + 1] = -0.44;
-        dataCoords[i * 3 + 2] = (Math.random() - 0.5) * 1.0;
+    r1.rotation.z += 0.003;
+    r2.rotation.z -= 0.005;
+    r3.rotation.z += 0.002;
+
+    // AI Core floating pulse
+    const pulseFactor = 0.08 * Math.sin(Date.now() * 0.0016);
+    aiSphere.position.y = 0.1 + pulseFactor;
+    innerCore.position.y = 0.1 + pulseFactor;
+    ringGroup.position.y = 0.1 + pulseFactor;
+
+    // Orbiting shields
+    shields.forEach(mesh => {
+      mesh.userData.angle += mesh.userData.speed;
+      mesh.position.x = Math.cos(mesh.userData.angle) * mesh.userData.radius;
+      mesh.position.z = Math.sin(mesh.userData.angle) * mesh.userData.radius;
+      mesh.position.y = mesh.userData.yOffset;
+      mesh.rotation.y = -mesh.userData.angle + Math.PI / 2;
+    });
+
+    // Rise data streams
+    const streamCoords = dataStreams.geometry.attributes.position.array;
+    for (let i = 0; i < streamCount; i++) {
+      streamCoords[i * 3 + 1] += streamVelocities[i];
+      if (streamCoords[i * 3 + 1] > 0.8) {
+        streamCoords[i * 3] = (Math.random() - 0.5) * 2.0;
+        streamCoords[i * 3 + 1] = -0.92;
+        streamCoords[i * 3 + 2] = (Math.random() - 0.5) * 2.0;
       }
     }
-    dataParticles.geometry.attributes.position.needsUpdate = true;
+    dataStreams.geometry.attributes.position.needsUpdate = true;
 
-    // Screen display hinge pulsing
-    screenGroup.rotation.x = -0.3 + (Math.sin(Date.now() * 0.001) * 0.045);
+    // Parallax mouse follow LERP
+    targetRotX += (mouseY - targetRotX) * 0.06;
+    targetRotY += (mouseX - targetRotY) * 0.06;
 
-    // Mouse tracking coordinate sets
-    targetRotX += (mouseY - targetRotX) * 0.07;
-    targetRotY += (mouseX - targetRotY) * 0.07;
+    coreGroup.rotation.x = targetRotX * 0.4;
+    coreGroup.rotation.y = Math.sin(Date.now() * 0.0003) * 0.08 + (targetRotY * 0.5);
 
-    // Direct X/Y tilt
-    laptopGroup.rotation.x = targetRotX * 0.45;
-    laptopGroup.rotation.y = Math.sin(Date.now() * 0.0006) * 0.15 + (targetRotY * 0.6);
-
-    // Magnetic drift translations (pulls laptop towards cursor position)
-    targetPosX += (mouseX * 0.8 - targetPosX) * 0.06;
-    targetPosY += (-mouseY * 0.6 - targetPosY) * 0.06;
-    laptopGroup.position.set(targetPosX, targetPosY, 0);
+    targetPosX += (mouseX * 0.7 - targetPosX) * 0.05;
+    targetPosY += (-mouseY * 0.5 - targetPosY) * 0.05;
+    coreGroup.position.set(targetPosX, targetPosY, 0);
 
     renderer.render(scene, camera);
   }
@@ -677,78 +667,111 @@ function initSkills3D() {
   if (!canvas) return;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(40, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-  camera.position.z = 7;
+  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+  camera.position.z = 7.5;
 
   const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
   renderer.setSize(canvas.clientWidth, canvas.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // Canvas texture builder
-  function createCubeTexture(name, accentColor) {
+  // Canvas text texture helper
+  function createSkillNodeTexture(name, color) {
     const textCanvas = document.createElement('canvas');
     textCanvas.width = 256;
     textCanvas.height = 256;
     const ctx = textCanvas.getContext('2d');
     
-    ctx.fillStyle = '#1a1a1d'; // graphite base
-    ctx.fillRect(0, 0, 256, 256);
+    ctx.clearRect(0, 0, 256, 256);
     
-    ctx.lineWidth = 14;
-    ctx.strokeStyle = accentColor;
-    ctx.strokeRect(0, 0, 256, 256);
+    // Glowing gradient circle
+    const grad = ctx.createRadialGradient(128, 128, 10, 128, 128, 120);
+    grad.addColorStop(0, color);
+    grad.addColorStop(0.3, 'rgba(12, 13, 21, 0.95)');
+    grad.addColorStop(1, color);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(128, 128, 118, 0, Math.PI * 2);
+    ctx.fill();
     
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
-    for(let i = 0; i < 256; i += 32) {
-      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 256); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(256, i); ctx.stroke();
-    }
-    
-    ctx.font = 'bold 36px Poppins, sans-serif';
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+
+    ctx.font = 'bold 32px Orbitron, sans-serif';
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.shadowColor = accentColor;
-    ctx.shadowBlur = 12;
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 15;
     ctx.fillText(name, 128, 128);
 
     return new THREE.CanvasTexture(textCanvas);
   }
 
-  // Soft violet and cyan colored skill list
-  skillDataRef = [
-    { name: 'Python', color: '#9061f9', pos: [-1.4, 0.9, 0], scale: 0.9 },
-    { name: 'React', color: '#06b6d4', pos: [1.3, 0.8, -0.5], scale: 0.95 },
-    { name: 'Flask', color: '#9061f9', pos: [-1.2, -0.9, -0.3], scale: 0.85 },
-    { name: 'MongoDB', color: '#06b6d4', pos: [1.2, -0.9, 0.2], scale: 0.9 }
+  // 6 Skills representation nodes
+  const skillNodesData = [
+    { name: 'Python', color: '#00ff66', pos: [-1.6, 1.0, 0] },
+    { name: 'AI & ML', color: '#8b5cf6', pos: [1.6, 1.1, -0.5] },
+    { name: 'React', color: '#3b82f6', pos: [0, 1.3, 0.5] },
+    { name: 'Cyber Sec', color: '#00ff66', pos: [-1.5, -0.9, -0.3] },
+    { name: 'Databases', color: '#3b82f6', pos: [1.5, -0.8, 0.3] },
+    { name: 'Git/Linux', color: '#8b5cf6', pos: [0, -1.2, -0.4] }
   ];
 
-  skillCubes = [];
+  const skillMeshes = [];
+  const nodesGroup = new THREE.Group();
+  scene.add(nodesGroup);
 
-  skillDataRef.forEach(data => {
-    const texture = createCubeTexture(data.name, data.color);
-    const geometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
-    const materials = Array(6).fill(new THREE.MeshPhongMaterial({ map: texture, shininess: 100 }));
+  skillNodesData.forEach(data => {
+    const texture = createSkillNodeTexture(data.name, data.color);
+    const geometry = new THREE.SphereGeometry(0.55, 32, 32);
+    const material = new THREE.MeshPhongMaterial({
+      map: texture,
+      shininess: 120,
+      transparent: true,
+      opacity: 0.95,
+      side: THREE.DoubleSide
+    });
     
-    const cube = new THREE.Mesh(geometry, materials);
-    cube.position.set(data.pos[0], data.pos[1], data.pos[2]);
-    cube.scale.set(data.scale, data.scale, data.scale);
-    
-    cube.rotSpeedX = 0.008 + Math.random() * 0.008;
-    cube.rotSpeedY = 0.005 + Math.random() * 0.008;
-    cube.floatOffset = Math.random() * 10;
-
-    scene.add(cube);
-    skillCubes.push(cube);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(data.pos[0], data.pos[1], data.pos[2]);
+    mesh.userData = {
+      baseX: data.pos[0],
+      baseY: data.pos[1],
+      baseZ: data.pos[2],
+      floatOffset: Math.random() * 50,
+      pulseSpeed: 0.002 + Math.random() * 0.002
+    };
+    nodesGroup.add(mesh);
+    skillMeshes.push(mesh);
   });
 
-  // Lights
-  const light = new THREE.DirectionalLight(0xffffff, 1.8);
-  light.position.set(1, 3, 4);
-  scene.add(light);
+  // Connecting network lines
+  const lineMat = new THREE.LineBasicMaterial({
+    color: 0x00d2ff,
+    transparent: true,
+    opacity: 0.25
+  });
+  
+  const lineGeo = new THREE.BufferGeometry();
+  const linePositions = [];
+  
+  for (let i = 0; i < skillMeshes.length; i++) {
+    for (let j = i + 1; j < skillMeshes.length; j++) {
+      linePositions.push(skillNodesData[i].pos[0], skillNodesData[i].pos[1], skillNodesData[i].pos[2]);
+      linePositions.push(skillNodesData[j].pos[0], skillNodesData[j].pos[1], skillNodesData[j].pos[2]);
+    }
+  }
+  lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+  const connections = new THREE.LineSegments(lineGeo, lineMat);
+  nodesGroup.add(connections);
 
-  const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+  // Lights
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  dirLight.position.set(2, 4, 5);
+  scene.add(dirLight);
+
+  const ambient = new THREE.AmbientLight(0xffffff, 0.45);
   scene.add(ambient);
 
   // Resize handler
@@ -760,26 +783,45 @@ function initSkills3D() {
     renderer.setSize(w, h);
   });
 
-  // Cube floating render loop with magnetic pull
+  // Render loop
+  let targetRotX = 0, targetRotY = 0;
   function animate() {
     requestAnimationFrame(animate);
 
-    skillCubes.forEach((cube, idx) => {
-      cube.rotation.x += cube.rotSpeedX;
-      cube.rotation.y += cube.rotSpeedY;
-
-      // Base sine floating height
-      const floatHeight = skillDataRef[idx].pos[1] + Math.sin((Date.now() * 0.0015) + cube.floatOffset) * 0.15;
+    // Float each node
+    skillMeshes.forEach(mesh => {
+      const time = Date.now() * mesh.userData.pulseSpeed + mesh.userData.floatOffset;
+      mesh.position.y = mesh.userData.baseY + Math.sin(time) * 0.12;
+      mesh.position.x = mesh.userData.baseX + Math.cos(time * 0.7) * 0.08;
       
-      // Magnetic pull coordinates mapping
-      const destX = skillDataRef[idx].pos[0] + (mouseX * 0.6);
-      const destY = floatHeight + (-mouseY * 0.4);
-
-      cube.position.x += (destX - cube.position.x) * 0.06;
-      cube.position.y += (destY - cube.position.y) * 0.06;
-
-      cube.rotation.z = mouseX * 0.15;
+      mesh.rotation.y += 0.005;
     });
+
+    // Update lines to follow floating nodes
+    const coords = connections.geometry.attributes.position.array;
+    let idx = 0;
+    for (let i = 0; i < skillMeshes.length; i++) {
+      for (let j = i + 1; j < skillMeshes.length; j++) {
+        coords[idx * 6] = skillMeshes[i].position.x;
+        coords[idx * 6 + 1] = skillMeshes[i].position.y;
+        coords[idx * 6 + 2] = skillMeshes[i].position.z;
+
+        coords[idx * 6 + 3] = skillMeshes[j].position.x;
+        coords[idx * 6 + 4] = skillMeshes[j].position.y;
+        coords[idx * 6 + 5] = skillMeshes[j].position.z;
+        idx++;
+      }
+    }
+    connections.geometry.attributes.position.needsUpdate = true;
+
+    // Slow rotation of entire group
+    nodesGroup.rotation.y = Math.sin(Date.now() * 0.0002) * 0.2;
+
+    // Magnetic mouse follow tilt
+    targetRotX += (mouseY - targetRotX) * 0.07;
+    targetRotY += (mouseX - targetRotY) * 0.07;
+    nodesGroup.rotation.x = targetRotX * 0.3;
+    nodesGroup.rotation.y += targetRotY * 0.4;
 
     renderer.render(scene, camera);
   }
@@ -1245,4 +1287,133 @@ function initAbout3D() {
   }
   
   animate();
+}
+
+// ================= Hero Tab Controls =================
+function initHeroTabs() {
+  const tabs = document.querySelectorAll('.hero-tab-btn');
+  const contents = document.querySelectorAll('.hero-tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+
+      tab.classList.add('active');
+      const activeContent = document.getElementById(tab.dataset.tab);
+      if (activeContent) activeContent.classList.add('active');
+      
+      if (tab.dataset.tab === 'terminal-tab') {
+        setTimeout(() => {
+          const terminalInput = document.getElementById('terminal-input');
+          if (terminalInput) terminalInput.focus();
+        }, 100);
+      }
+    });
+  });
+}
+
+// ================= Cyber Terminal Interpreter =================
+const TERMINAL_COMMANDS = {
+  help: [
+    "-------------------------------------------------------------",
+    "SECURE SHELL PROTOCOL MODULES AVAILABLE:",
+    "  help             - Displays this command parameter list.",
+    "  about            - Details Nagarjuna's identity and core focus.",
+    "  skills           - Prints core languages & tech competencies.",
+    "  projects         - Fetches active software portfolio archives.",
+    "  timeline         - Reveals timeline of academic & tech history.",
+    "  contact          - Outputs secure external connection links.",
+    "  clear            - Clears terminal output shell log.",
+    "-------------------------------------------------------------"
+  ],
+  about: [
+    "Host Identity: Naga Arjun",
+    "Course Focus: B.E in Artificial Intelligence & Data Science",
+    "Academic Base: SIET College, Tumkur (Shridevi Institute of Engineering & Technology)",
+    "Mission Parameters: Building intelligent systems, secure full-stack applications, AI medical platforms, and automation."
+  ],
+  skills: [
+    "Compiling host technical indicators...",
+    "  - Core Languages   : Python (Advanced), Java, HTML/CSS/JavaScript (ES6+), TypeScript",
+    "  - Intelligent Tech : Machine Learning models, OpenCV, Bioinformatics AI, NLP",
+    "  - Web Engineering  : Next.js, React, Vite, Node.js, FastAPI, Flask, Tailwind CSS, PostgreSQL",
+    "  - Platform Systems : PWA, Vercel, Render, Google Identity, Git, GitHub, Linux"
+  ],
+  projects: [
+    "Querying active portfolio archives...",
+    "  1. NeuroGen AI [Next.js + Clinical Bioinformatics AI + Vercel]",
+    "     - Brain cancer bioinformatics platform for genomic sequencing & transcriptomics.",
+    "  2. KSLU Circle [React + Vite + PWA + Google Auth]",
+    "     - Peer-to-peer Law study resources, question papers & notes repository.",
+    "  3. AI Placement Platform [React + FastAPI + PostgreSQL]",
+    "     - Multi-agent AI platform scoring resumes via ATS and conducting mock interviews.",
+    "  4. AI Attendance System [Vite + FastAPI + OpenCV]",
+    "     - Face-recognition student check-in dashboards for HOD, Principal & Faculty.",
+    "  5. ASYNCPROOF Meeting Assistant [React + FastAPI + Whisper]",
+    "     - Web bot recording meetings, transcribing and summarizing action tasks."
+  ],
+  timeline: [
+    "Decrypting timeline nodes...",
+    "  - [2024 - Present] B.E (Artificial Intelligence & Data Science) at SIET College, Tumkur.",
+    "  - [2024] Cybersecurity Internship. Focused on secure networks and vulnerability scans.",
+    "  - [Ongoing] Product Creator & SaaS Developer. Live platforms: NeuroGen AI & KSLU Circle."
+  ],
+  contact: [
+    "Establishing external connections...",
+    "  - Email    : acarjunarjun@gmail.com",
+    "  - GitHub   : https://github.com/nagarjuna-32",
+    "  - LinkedIn : https://www.linkedin.com/in/naga-arjuna-n/"
+  ]
+};
+
+function initCyberTerminal() {
+  const terminalInput = document.getElementById('terminal-input');
+  const terminalOutput = document.getElementById('terminal-output');
+  const terminalBody = document.getElementById('terminal-body');
+
+  if (!terminalInput || !terminalOutput || !terminalBody) return;
+
+  terminalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const command = terminalInput.value.trim().toLowerCase();
+      terminalInput.value = '';
+      
+      const cmdEcho = document.createElement('div');
+      cmdEcho.className = 'command-line-echo';
+      cmdEcho.innerHTML = `<span class="terminal-prompt">visitor@arjun:~$</span> ${command}`;
+      terminalOutput.appendChild(cmdEcho);
+
+      if (command) {
+        processCommand(command, terminalOutput);
+      }
+      
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+  });
+}
+
+function processCommand(cmd, outputNode) {
+  if (cmd === 'clear' || cmd === 'cls') {
+    outputNode.innerHTML = '<div class="system-line">Terminal buffer flushed. Connected to host node: ARJUN-NODE.</div>';
+    return;
+  }
+
+  if (TERMINAL_COMMANDS[cmd]) {
+    TERMINAL_COMMANDS[cmd].forEach(line => {
+      const lineNode = document.createElement('div');
+      if (line.startsWith('----------------') || line.startsWith('Host') || line.startsWith('Compiling') || line.startsWith('Querying') || line.startsWith('Decrypting') || line.startsWith('Establishing')) {
+        lineNode.className = 'system-line';
+      } else {
+        lineNode.className = 'success-line';
+      }
+      lineNode.textContent = line;
+      outputNode.appendChild(lineNode);
+    });
+  } else {
+    const errorNode = document.createElement('div');
+    errorNode.className = 'error-line';
+    errorNode.textContent = `sys-err: command '${cmd}' unrecognized. Type 'help' to review parameters.`;
+    outputNode.appendChild(errorNode);
+  }
 }
