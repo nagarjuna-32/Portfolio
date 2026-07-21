@@ -1174,105 +1174,19 @@ function initAbout3D() {
     renderer.setSize(w, h);
   });
 
-  // Speech Logic and Animation state variables
-  let isSpeaking = false;
-  let hasSpoken = false;
-  let synth = window.speechSynthesis;
-  let utterance = null;
-
-  function startSpeakingState() {
-    if (hasSpoken) return;
-    isSpeaking = true;
-    hasSpoken = true;
-    
-    const textToSpeak = "Hi, I am Nagarjuna N. I am currently pursuing my Bachelor of Engineering in Artificial Intelligence and Data Science at SIET College, Tumkur. I am extremely passionate about building modern AI products, full stack web applications, cybersecurity projects, and futuristic user experiences. I enjoy working on innovative ideas like AI assistants, meeting intelligence platforms, automation systems, and ethical hacking tools.";
-    
-    utterance = new SpeechSynthesisUtterance(textToSpeak);
-    
-    const voices = synth.getVoices();
-    const premiumVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.name.includes('Microsoft David') || v.lang.startsWith('en'));
-    if (premiumVoice) utterance.voice = premiumVoice;
-    
-    utterance.onend = () => {
-      stopSpeakingState();
-    };
-    
-    utterance.onerror = () => {
-      stopSpeakingState();
-    };
-    
-    synth.speak(utterance);
-  }
-
-  function stopSpeakingState() {
-    isSpeaking = false;
-  }
-
-  // Trigger automatically on scroll using ScrollTrigger
-  if (typeof ScrollTrigger !== 'undefined') {
-    ScrollTrigger.create({
-      trigger: '#about',
-      start: 'top 65%',
-      end: 'bottom 20%',
-      onEnter: () => {
-        startSpeakingState();
-      },
-      onLeave: () => {
-        if (isSpeaking) {
-          synth.cancel();
-          stopSpeakingState();
-        }
-      },
-      onEnterBack: () => {
-        startSpeakingState();
-      },
-      onLeaveBack: () => {
-        if (isSpeaking) {
-          synth.cancel();
-          stopSpeakingState();
-        }
-      }
-    });
-  }
-
-  // Handle Autoplay blocks by triggering on first interaction if in view
-  const userInteractionEvents = ['click', 'touchstart', 'keydown'];
-  const unlockSpeech = () => {
-    const aboutSec = document.getElementById('about');
-    if (aboutSec && !hasSpoken) {
-      const rect = aboutSec.getBoundingClientRect();
-      const inViewport = (rect.top < window.innerHeight * 0.75) && (rect.bottom > window.innerHeight * 0.20);
-      if (inViewport) {
-        startSpeakingState();
-      }
-    }
-    // Remove listeners once run
-    userInteractionEvents.forEach(evt => document.removeEventListener(evt, unlockSpeech));
-  };
-  userInteractionEvents.forEach(evt => document.addEventListener(evt, unlockSpeech, { passive: true }));
-
   // Animation Loop
   let targetRotX = 0, targetRotY = 0;
   function animate() {
     requestAnimationFrame(animate);
 
-    // Rotate sound wave rings
+    // Rotate ambient rings
     waveRing.rotation.z += 0.005;
     waveRing2.rotation.z -= 0.003;
 
-    // Pulse rings and grid if speaking
-    if (isSpeaking) {
-      const pulse = 1.0 + Math.sin(Date.now() * 0.015) * 0.08;
-      waveRing.scale.set(pulse, pulse, 1);
-      waveRing2.scale.set(1 / pulse, 1 / pulse, 1);
-      gridHelper.material.opacity = 0.25 + Math.sin(Date.now() * 0.01) * 0.1;
-      photoMesh.position.z = Math.sin(Date.now() * 0.02) * 0.04;
-    } else {
-      waveRing.scale.set(1, 1, 1);
-      waveRing2.scale.set(1, 1, 1);
-      gridHelper.material.opacity = 0.12;
-      photoMesh.position.z = 0;
-    }
+    waveRing.scale.set(1, 1, 1);
+    waveRing2.scale.set(1, 1, 1);
+    gridHelper.material.opacity = 0.12;
+    photoMesh.position.z = 0;
 
     // Parallax mouse follow
     targetRotX += (mouseY - targetRotX) * 0.08;

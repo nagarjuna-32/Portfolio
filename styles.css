@@ -1325,41 +1325,6 @@ footer {
   display: block;
 }
 
-.speak-btn {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 24px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze));
-  color: #0f0f10;
-  border: none;
-  font-weight: 600;
-  font-size: 13px;
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 20px rgba(144, 97, 249, 0.25);
-  z-index: 10;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.speak-btn:hover {
-  transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 12px 25px rgba(144, 97, 249, 0.45);
-}
-
-.speak-btn.speaking {
-  background: #ef4444 !important;
-  color: #ffffff !important;
-  box-shadow: 0 10px 20px rgba(239, 68, 68, 0.35);
-}
-
 @media (max-width: 900px) {
   .avatar-3d-wrapper {
     max-width: 300px;
