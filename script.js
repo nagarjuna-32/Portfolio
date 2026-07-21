@@ -1088,7 +1088,7 @@ function initCertificateLightbox() {
   });
 }
 
-// ================= About Me 3D Talking Hologram Card =================
+// ================= About Me Clear 3D Display Card =================
 function initAbout3D() {
   const canvas = document.getElementById('about-3d-canvas');
   if (!canvas) return;
@@ -1101,69 +1101,46 @@ function initAbout3D() {
   renderer.setSize(canvas.clientWidth, canvas.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // Load User Image as 3D Texture
+  // Load User Image as High-Definition 3D Texture
   const textureLoader = new THREE.TextureLoader();
   const photoTexture = textureLoader.load('arjun_new.jpeg');
 
-  // Create Hologram Plane
+  // Create High-Clarity Photo Plane
   const geometry = new THREE.PlaneGeometry(2.1, 2.8);
   const material = new THREE.MeshPhongMaterial({
     map: photoTexture,
-    transparent: true,
-    opacity: 0.9,
-    shininess: 60,
+    transparent: false,
+    opacity: 1.0,
+    shininess: 30,
     side: THREE.DoubleSide
   });
   const photoMesh = new THREE.Mesh(geometry, material);
   photoMesh.position.y = 0.1;
   scene.add(photoMesh);
 
-  // Glowing Hologram Border Frame
-  const borderGeo = new THREE.PlaneGeometry(2.2, 2.9);
+  // Elegant Glassmorphism Border Frame
+  const borderGeo = new THREE.PlaneGeometry(2.18, 2.88);
   const borderMat = new THREE.MeshBasicMaterial({
-    color: 0x9061f9,
+    color: 0x00d2ff,
     transparent: true,
-    opacity: 0.3,
+    opacity: 0.25,
     side: THREE.DoubleSide
   });
   const borderMesh = new THREE.Mesh(borderGeo, borderMat);
   borderMesh.position.set(0, 0.1, -0.01);
   scene.add(borderMesh);
 
-  // Holographic Scanlines / Grid lines overlaying the photo
-  const gridHelper = new THREE.GridHelper(2.5, 25, 0x06b6d4, 0x06b6d4);
-  gridHelper.rotation.x = Math.PI / 2;
-  gridHelper.position.set(0, 0.1, 0.02);
-  gridHelper.material.transparent = true;
-  gridHelper.material.opacity = 0.12;
-  scene.add(gridHelper);
-
-  // Concentric Sound Wave Orbits (Cyan & Violet)
-  const waveGroup = new THREE.Group();
-  const waveGeo = new THREE.RingGeometry(1.5, 1.52, 64);
-  const waveMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.4, side: THREE.DoubleSide });
-  const waveRing = new THREE.Mesh(waveGeo, waveMat);
-  waveGroup.add(waveRing);
-  
-  const waveGeo2 = new THREE.RingGeometry(1.7, 1.72, 64);
-  const waveMat2 = new THREE.MeshBasicMaterial({ color: 0x9061f9, transparent: true, opacity: 0.3, side: THREE.DoubleSide });
-  const waveRing2 = new THREE.Mesh(waveGeo2, waveMat2);
-  waveGroup.add(waveRing2);
-  
-  waveGroup.position.set(0, 0.1, 0.05);
-  scene.add(waveGroup);
-
-  // Lights
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+  // Bright, Natural Studio Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
   scene.add(ambientLight);
 
-  const pointLight = new THREE.PointLight(0x06b6d4, 1.5, 10);
-  pointLight.position.set(1.5, 1.5, 2);
-  scene.add(pointLight);
+  const frontLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  frontLight.position.set(0, 1, 3);
+  scene.add(frontLight);
 
-  const pointLight2 = new THREE.PointLight(0x9061f9, 1.5, 10);
-  pointLight2.position.set(-1.5, -1.5, 2);
-  scene.add(pointLight2);
+  const cyanAccentLight = new THREE.PointLight(0x00d2ff, 0.6, 10);
+  cyanAccentLight.position.set(2, 2, 2);
+  scene.add(cyanAccentLight);
 
   // Resize handler
   window.addEventListener('resize', () => {
@@ -1174,28 +1151,19 @@ function initAbout3D() {
     renderer.setSize(w, h);
   });
 
-  // Animation Loop
+  // Animation Loop (Parallax Smooth Follow)
   let targetRotX = 0, targetRotY = 0;
   function animate() {
     requestAnimationFrame(animate);
-
-    // Rotate ambient rings
-    waveRing.rotation.z += 0.005;
-    waveRing2.rotation.z -= 0.003;
-
-    waveRing.scale.set(1, 1, 1);
-    waveRing2.scale.set(1, 1, 1);
-    gridHelper.material.opacity = 0.12;
-    photoMesh.position.z = 0;
 
     // Parallax mouse follow
     targetRotX += (mouseY - targetRotX) * 0.08;
     targetRotY += (mouseX - targetRotY) * 0.08;
 
-    photoMesh.rotation.y = targetRotY * 0.4;
-    photoMesh.rotation.x = -targetRotX * 0.3;
-    borderMesh.rotation.y = targetRotY * 0.4;
-    borderMesh.rotation.x = -targetRotX * 0.3;
+    photoMesh.rotation.y = targetRotY * 0.3;
+    photoMesh.rotation.x = -targetRotX * 0.2;
+    borderMesh.rotation.y = targetRotY * 0.3;
+    borderMesh.rotation.x = -targetRotX * 0.2;
 
     renderer.render(scene, camera);
   }

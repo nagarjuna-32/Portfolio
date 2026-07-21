@@ -1299,7 +1299,7 @@ footer {
   text-align: center;
 }
 
-/* ================= 3D Avatar Speaking Hologram Container ================= */
+/* ================= 3D Photo Display Container ================= */
 .avatar-3d-wrapper {
   position: relative;
   width: 100%;
@@ -1307,16 +1307,16 @@ footer {
   height: 480px;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(144, 97, 249, 0.25);
-  background: rgba(26, 26, 29, 0.6);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  background: rgba(12, 13, 21, 0.75);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 210, 255, 0.12);
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s, box-shadow 0.4s;
 }
 
 .avatar-3d-wrapper:hover {
   transform: translateY(-5px);
-  border-color: var(--accent-gold);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(144, 97, 249, 0.2);
+  border-color: var(--accent-bronze);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 245, 212, 0.25);
 }
 
 #about-3d-canvas {
