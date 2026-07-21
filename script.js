@@ -1313,7 +1313,7 @@ function initHeroTabs() {
   });
 }
 
-// ================= Cyber Terminal Interpreter =================
+// ================= Cyber Terminal Interpreter Protocol Engine =================
 const TERMINAL_COMMANDS = {
   help: [
     "-------------------------------------------------------------",
