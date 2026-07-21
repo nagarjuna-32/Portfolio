@@ -62,25 +62,68 @@
   <!-- ================= Hero Section ================= -->
   <section class="hero" id="home">
     <div class="hero-content reveal-on-scroll">
-      <div class="badge">⚡ AI • Full Stack • Cybersecurity</div>
+      <div class="badge">⚡ AI • Development • Cybersecurity</div>
 
       <h1>Hi, I'm <span class="text-3d" data-text="Naga Arjun">Naga Arjun</span></h1>
 
       <div class="typing" id="typing"></div>
 
-      <p>
-        AI & Data Science student passionate about building AI products, full stack applications,
-        cybersecurity tools, automation systems, and futuristic user experiences.
-      </p>
+      <!-- Hero Cinematic Tabs -->
+      <div class="hero-tabs">
+        <button class="hero-tab-btn active" data-tab="bio-tab"><i class="fas fa-id-card"></i> OVERVIEW</button>
+        <button class="hero-tab-btn" data-tab="terminal-tab"><i class="fas fa-terminal"></i> ACTIVE TERMINAL</button>
+      </div>
 
-      <div class="buttons">
-        <a class="btn btn-primary" href="#projects"><i class="fas fa-code"></i> View Projects</a>
-        <a class="btn btn-secondary" href="#resume"><i class="fas fa-file-pdf"></i> Resume</a>
-        <a class="btn btn-secondary" href="#contact"><i class="fas fa-envelope"></i> Contact Me</a>
+      <!-- Tab 1: Bio Overview -->
+      <div class="hero-tab-content active" id="bio-tab">
+        <p>
+          AI & Data Science student passionate about building modern AI products, full stack applications,
+          cybersecurity systems, automation, and premium user experiences.
+        </p>
+
+        <div class="buttons">
+          <a class="btn btn-primary" href="#projects"><i class="fas fa-code"></i> View Projects</a>
+          <a class="btn btn-secondary" href="#resume"><i class="fas fa-file-pdf"></i> Resume</a>
+          <a class="btn btn-secondary" href="#contact"><i class="fas fa-envelope"></i> Contact Me</a>
+        </div>
+      </div>
+
+      <!-- Tab 2: Terminal Console -->
+      <div class="hero-tab-content" id="terminal-tab">
+        <div class="cyber-terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="terminal-title">guest@arjun-node:~</div>
+            <div class="terminal-status"><span class="blink">●</span> ONLINE</div>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <div class="terminal-output" id="terminal-output">
+              <div class="system-line">INITIALIZING TERMINAL SHELL CONNECT...</div>
+              <div class="system-line">ESTABLISHED SECURE LINK TO PORTFOLIO HOST NODE.</div>
+              <div class="system-line">Type 'help' to see all available command parameters.</div>
+            </div>
+            <div class="terminal-input-line">
+              <span class="terminal-prompt">visitor@arjun:~$</span>
+              <input type="text" id="terminal-input" autocomplete="off" placeholder="Type command here...">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="hero-3d-container reveal-on-scroll">
+      <!-- High-tech HUD frame detailing -->
+      <div class="hud-frame">
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+        <div class="hud-status">SYSTEM: ONLINE</div>
+      </div>
       <div class="hero-3d-wrapper">
         <canvas id="hero-3d-canvas"></canvas>
       </div>
@@ -127,8 +170,8 @@
 
   <!-- ================= Skills Section ================= -->
   <section id="skills">
-    <h2 class="section-title">Skills</h2>
-    <p class="section-subtitle">Technologies and tools I am learning and using in my projects.</p>
+    <h2 class="section-title">Skill Matrix</h2>
+    <p class="section-subtitle">Core technical parameters and tool proficiencies compiled in active matrices.</p>
 
     <div class="skills-container reveal-on-scroll">
       <div class="skills-grid">
@@ -181,24 +224,24 @@
 
   <!-- ================= Projects Section ================= -->
   <section id="projects">
-    <h2 class="section-title">Projects</h2>
-    <p class="section-subtitle">Projects that show my learning, creativity, and product-building mindset.</p>
+    <h2 class="section-title">Interactive Project Showcase</h2>
+    <p class="section-subtitle">A volumetric log of developed software products, web architectures, and AI databases.</p>
 
     <!-- Project Statistics -->
     <div class="project-stats reveal-on-scroll">
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-folder-open"></i></div>
-        <span class="stat-number">10+</span>
+        <span class="stat-number">12+</span>
         <span class="stat-label">Projects Built</span>
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-brain"></i></div>
-        <span class="stat-number">5+</span>
+        <span class="stat-number">6+</span>
         <span class="stat-label">AI Applications</span>
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-rocket"></i></div>
-        <span class="stat-number">3</span>
+        <span class="stat-number">5</span>
         <span class="stat-label">Deployed SaaS Products</span>
       </div>
       <div class="stat-card">
@@ -210,6 +253,92 @@
 
     <!-- Category: Featured Projects -->
     <h3 class="category-title"><i class="fas fa-star animate-pulse"></i> Featured Projects</h3>
+
+    <!-- Featured Project: NeuroGen AI -->
+    <div class="featured-project-container reveal-on-scroll">
+      <div class="card featured-card" data-tilt data-tilt-max="8" data-tilt-glare data-tilt-max-glare="0.25">
+        <div class="card-inner-3d">
+          <div class="featured-badge"><i class="fas fa-star animate-pulse"></i> Featured Project</div>
+          <h3>NeuroGen AI – Clinical Brain Cancer Bioinformatics Platform</h3>
+          <p class="featured-desc">Advanced AI-powered clinical bioinformatics platform built for brain cancer research, genomic sequencing analysis, transcriptomic expression mapping, variant annotation, and patient survival metrics.</p>
+          
+          <div class="featured-grid">
+            <div>
+              <h4 class="details-title"><i class="fas fa-list-check"></i> Key Features</h4>
+              <ul class="project-features">
+                <li>FASTA/FASTQ raw genomic data quality control & variant mapping</li>
+                <li>Volcano expression heatmaps & transcriptomic pathway enrichment</li>
+                <li>Patient cohort analysis across 4.2B+ sequenced bases</li>
+                <li>Collaborative workspace for Researchers, Professors, Labs, and Clinics</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="details-title"><i class="fas fa-layer-group"></i> Architecture Stack</h4>
+              <div class="project-tags">
+                <span>Next.js</span>
+                <span>React</span>
+                <span>Bioinformatics AI</span>
+                <span>Tailwind CSS</span>
+                <span>Lucide Icons</span>
+                <span>Vercel</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-links">
+            <a href="https://neurogen-dusky.vercel.app" target="_blank" class="card-btn btn-demo">
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Project: KSLU Circle -->
+    <div class="featured-project-container reveal-on-scroll">
+      <div class="card featured-card" data-tilt data-tilt-max="8" data-tilt-glare data-tilt-max-glare="0.25">
+        <div class="card-inner-3d">
+          <div class="featured-badge"><i class="fas fa-star animate-pulse"></i> Featured Project</div>
+          <h3>KSLU Circle – Law Study Resources & Notes Hub</h3>
+          <p class="featured-desc">Peer-to-peer educational web platform and Progressive Web App (PWA) tailored for Karnataka State Law University (KSLU) students, providing lecture notes, exam guides, question paper archives, and Google auth integration.</p>
+          
+          <div class="featured-grid">
+            <div>
+              <h4 class="details-title"><i class="fas fa-list-check"></i> Key Features</h4>
+              <ul class="project-features">
+                <li>Peer-to-peer repository for LLB lecture notes & university question papers</li>
+                <li>Progressive Web App (PWA) support with offline accessibility</li>
+                <li>Google One-Tap Identity authentication & dynamic SEO optimization</li>
+                <li>Dark & Light mode theme engine with responsive UI styling</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="details-title"><i class="fas fa-layer-group"></i> Architecture Stack</h4>
+              <div class="project-tags">
+                <span>React</span>
+                <span>Vite</span>
+                <span>PWA</span>
+                <span>Tailwind CSS</span>
+                <span>Google Identity</span>
+                <span>Vercel</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-links">
+            <a href="https://kslucircle.online" target="_blank" class="card-btn btn-demo">
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+            <a href="https://github.com/nagarjuna-32" target="_blank" class="card-btn btn-github">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Featured Project 1: AI Placement Platform -->
     <div class="featured-project-container reveal-on-scroll">
