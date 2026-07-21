@@ -1101,23 +1101,129 @@ footer {
 
   /* Responsive stats and projects sections */
   .project-stats {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 15px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 35px;
   }
   .stat-card {
-    padding: 16px;
+    padding: 14px 10px;
   }
   .stat-number {
-    font-size: 26px;
+    font-size: 22px;
   }
   .stat-label {
-    font-size: 11px;
+    font-size: 10px;
   }
   
   .category-title {
-    font-size: 20px;
-    margin: 30px 0 15px;
+    font-size: 18px;
+    margin: 25px 0 15px;
+  }
+
+  /* Mobile Terminal & Hero Tabs */
+  .hero-tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .hero-tab-btn {
+    padding: 8px 14px;
+    font-size: 10px;
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .cyber-terminal-window {
+    border-radius: 10px;
+  }
+
+  .terminal-header {
+    padding: 10px 12px;
+  }
+
+  .terminal-title {
+    font-size: 10px;
+  }
+
+  .terminal-body {
+    padding: 12px;
+    height: 220px;
+  }
+
+  .terminal-output {
+    font-size: 12px;
+  }
+
+  .terminal-prompt {
+    font-size: 12px;
+  }
+
+  #terminal-input {
+    font-size: 12px;
+  }
+
+  /* Card Links & Buttons on Mobile */
+  .card-links {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .card-btn {
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .buttons, .about-buttons, .contact-buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .buttons .btn, .about-buttons .btn, .contact-buttons .btn {
+    flex-grow: 1;
+    justify-content: center;
+  }
+}
+
+/* Extra Narrow Mobile Viewports */
+@media (max-width: 480px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  h1, .hero-content h1 {
+    font-size: 28px !important;
+  }
+
+  .section-title {
+    font-size: 24px !important;
+  }
+
+  .project-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .stat-card {
+    padding: 12px 8px !important;
+  }
+
+  .stat-number {
+    font-size: 20px !important;
+  }
+
+  .stat-label {
+    font-size: 10px !important;
+  }
+
+  .buttons .btn, .about-buttons .btn, .contact-buttons .btn {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .profile-photo-wrapper {
+    max-width: 260px !important;
   }
 }
 
