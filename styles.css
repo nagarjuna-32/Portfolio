@@ -1595,4 +1595,198 @@ footer {
   border-bottom-right-radius: 4px;
 }
 
+/* ================= 3D Video Avatar Starting Intro Experience ================= */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #04060f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.intro-overlay.intro-dissolve {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+.intro-backdrop-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.15) 0%, rgba(0, 245, 212, 0.05) 50%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.intro-content {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+  width: 100%;
+  background: rgba(12, 13, 21, 0.85);
+  border: 1px solid rgba(0, 210, 255, 0.25);
+  border-radius: 24px;
+  padding: 30px 25px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 210, 255, 0.15);
+  backdrop-filter: blur(25px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.intro-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  color: var(--accent-bronze);
+  letter-spacing: 0.15em;
+  background: rgba(0, 245, 212, 0.08);
+  border: 1px solid rgba(0, 245, 212, 0.25);
+  padding: 5px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.intro-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.intro-avatar-stage {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#intro-avatar-canvas {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+}
+
+.avatar-equalizer-bars {
+  position: absolute;
+  bottom: -15px;
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 30px;
+  z-index: 5;
+}
+
+.eq-bar {
+  width: 4px;
+  height: 6px;
+  background: var(--accent-bronze);
+  border-radius: 2px;
+  transition: height 0.1s ease, background-color 0.2s ease;
+}
+
+.intro-overlay.speaking .eq-bar {
+  background: var(--accent-gold);
+  animation: eqPulse 0.4s infinite alternate;
+}
+
+@keyframes eqPulse {
+  0% { height: 6px; }
+  100% { height: 28px; }
+}
+
+.intro-subtitle-box {
+  background: rgba(4, 6, 15, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 15px 20px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.quote-icon {
+  color: var(--accent-gold);
+  font-size: 16px;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.intro-controls {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.intro-btn {
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+}
+
+.btn-primary-intro {
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze));
+  color: #04060f;
+  box-shadow: 0 10px 20px rgba(0, 210, 255, 0.25);
+}
+
+.btn-primary-intro:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 210, 255, 0.45);
+}
+
+.btn-secondary-intro {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-secondary-intro:hover {
+  border-color: var(--accent-gold);
+  color: var(--text-primary);
+  background: rgba(0, 210, 255, 0.08);
+}
+
 
