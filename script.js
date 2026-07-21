@@ -32,7 +32,6 @@ window.addEventListener('DOMContentLoaded', () => {
   initNavbarMenu();
   initVanillaTilt();
   initCertificateLightbox();
-  initAbout3D();
   
   // Cinematic Tech Innovator features
   initHeroTabs();

@@ -1299,12 +1299,11 @@ footer {
   text-align: center;
 }
 
-/* ================= 3D Photo Display Container ================= */
-.avatar-3d-wrapper {
+/* ================= Original Photo Display Container ================= */
+.profile-photo-wrapper {
   position: relative;
   width: 100%;
   max-width: 360px;
-  height: 480px;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(0, 210, 255, 0.3);
@@ -1313,22 +1312,23 @@ footer {
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s, box-shadow 0.4s;
 }
 
-.avatar-3d-wrapper:hover {
+.profile-photo-wrapper:hover {
   transform: translateY(-5px);
   border-color: var(--accent-bronze);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 245, 212, 0.25);
 }
 
-#about-3d-canvas {
+.profile-photo {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
 @media (max-width: 900px) {
-  .avatar-3d-wrapper {
+  .profile-photo-wrapper {
     max-width: 300px;
-    height: 400px;
     margin: 0 auto 30px;
   }
 }
